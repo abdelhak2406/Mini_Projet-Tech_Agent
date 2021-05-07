@@ -15,39 +15,43 @@ public class RuleBase {
     Clause clausePtr ;          // working pointer to current clause
     Stack goalClauseStack;      // for goals (cons clauses) and subgoals
 
-    static TextArea textArea1 ;
-    public void setDisplay(TextArea txtArea) { textArea1 = txtArea; }
+    //static TextArea textArea1 ;
+    //public void setDisplay(TextArea txtArea) { textArea1 = txtArea; }
 
     RuleBase(String Name) { name = Name; }
-    public static void appendText(String text) { textArea1.appendText(text); }
+    //textArea here
+    public static void appendText(String text) {
+        System.out.println(text); }
 
     // for trace purposes - display all variables and their value
-    public void displayVariables(TextArea textArea) {
+    public void displayVariables() {
 
         Enumeration enum87 = variableList.elements() ;
         while(enum87.hasMoreElements()) {
             RuleVariable temp = (RuleVariable)enum87.nextElement() ;
-            textArea.appendText("\n" + temp.name + " value = " + temp.value) ;
+            System.out.println("\n" + temp.name + " value = " + temp.value) ;
         }
     }
 
     // for trace purposes - display all rules in text format
-    public void displayRules(TextArea textArea) {
-        textArea.appendText("\n" + name + " Rule Base: " + "\n");
+    public void displayRules() {
+        System.out.println("\n" + name + " Rule Base: " + "\n");
         Enumeration enum87 = ruleList.elements() ;
         while(enum87.hasMoreElements()) {
             Rule temp = (Rule)enum87.nextElement() ;
-            temp.display(textArea) ;
+            temp.display() ;
         }
     }
 
     // for trace purposes - display all rules in the conflict set
     public void displayConflictSet(Vector ruleSet) {
-        textArea1.appendText("\n" + " -- Rules in conflict set:\n");
+        //textArea1.appendText("\n" + " -- Rules in conflict set:\n");
+        System.out.println("\n" + " -- Rules in conflict set:\n");
         Enumeration enum87 = ruleSet.elements() ;
         while(enum87.hasMoreElements()) {
             Rule temp = (Rule)enum87.nextElement() ;
-            textArea1.appendText(temp.name + "(" + temp.numAntecedents()+ "), " ) ;
+            //textArea1.appendText(temp.name + "(" + temp.numAntecedents()+ "), " ) ;
+            System.out.println(temp.name + "(" + temp.numAntecedents()+ "), " ) ;
         }
     }
 
@@ -55,7 +59,7 @@ public class RuleBase {
     // reset the rule base for another round of inferencing
     // by setting all variable values to null
     public void reset() {
-        textArea1.appendText("\n --- Setting all " + name + " variables to null");
+        System.out.println("\n --- Setting all " + name + " variables to null");
         Enumeration enum87 = variableList.elements() ;
         while(enum87.hasMoreElements()) {
             RuleVariable temp = (RuleVariable)enum87.nextElement() ;
@@ -84,28 +88,28 @@ public class RuleBase {
             Rule goalRule = goalClause.getRule();
             Boolean ruleTruth = goalRule.backChain() ; // find rule truth value
             if (ruleTruth == null) {
-                textArea1.appendText("\nRule " + goalRule.name +
+                System.out.println("\nRule " + goalRule.name +
                         " is null, can't determine truth value.");
             } else if (ruleTruth.booleanValue() == true) {
                 // rule is OK, assign consequent value to variable
                 goalVar.setValue(goalClause.rhs) ;
                 goalVar.setRuleName(goalRule.name) ;
                 goalClauseStack.pop() ;  // clear item from subgoal stack
-                textArea1.appendText("\nRule " + goalRule.name + " is true, setting " + goalVar.name + ": = " + goalVar.value);
+                System.out.println("\nRule " + goalRule.name + " is true, setting " + goalVar.name + ": = " + goalVar.value);
                 if (goalClauseStack.empty() == true) {
-                    textArea1.appendText("\n +++ Found Solution for goal: " + goalVar.name);
+                    System.out.println("\n +++ Found Solution for goal: " + goalVar.name);
                     break ; // for now, only find first solution, then stop
                 }
             } else {
                 goalClauseStack.pop() ; // clear item from subgoal stack
-                textArea1.appendText("\nRule " + goalRule.name + " is false, can't set " + goalVar.name);
+                System.out.println("\nRule " + goalRule.name + " is false, can't set " + goalVar.name);
             }
 
             // displayVariables("Backward Chaining") ;  // display variable bindings
         } // endwhile
 
         if (goalVar.value == null) {
-            textArea1.appendText("\n +++ Could Not Find Solution for goal: " + goalVar.name);
+            System.out.println("\n +++ Could Not Find Solution for goal: " + goalVar.name);
         }
     }
 

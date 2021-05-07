@@ -280,17 +280,17 @@ public class Rule {
 
     // display the rule in text format
     @SuppressWarnings("deprecation")
-    void display(TextArea textArea) {
-        textArea.appendText(name +": IF ") ;
+    void display() {
+        System.out.println(name +": IF ");
         for(int i=0 ; i < antecedents.length ; i++) {
             Clause nextClause = antecedents[i] ;
-            textArea.appendText(nextClause.lhs.name +
+            System.out.println(nextClause.lhs.name +
                     nextClause.cond.asString() +
                     nextClause.rhs + " ") ;
-            if ((i+1) < antecedents.length) textArea.appendText("\n     AND ") ;
+            if ((i+1) < antecedents.length) System.out.println("\n     AND ") ;
         }
-        textArea.appendText("\n     THEN ") ;
-        textArea.appendText(consequent.lhs.name +
+        System.out.println("\n     THEN ") ;
+        System.out.println(consequent.lhs.name +
                 consequent.cond.asString() +
                 consequent.rhs + "\n") ;
     }

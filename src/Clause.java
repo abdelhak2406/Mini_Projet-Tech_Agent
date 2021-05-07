@@ -32,7 +32,26 @@ public class Clause {
         if (consequent.booleanValue() == true) return null ;
         if (lhs.value == null) {
             return truth = null ;  // can't check if variable value is undefined
-        } else {
+        }
+        if(ifInt(rhs)){
+            switch(cond.index) {
+                case 1: truth = new Boolean(Integer.parseInt(lhs.value)==(Integer.parseInt(rhs))) ;
+//        RuleBase.appendText("\nTesting Clause " + lhs.name + " = " + rhs + " " + truth);
+                    break ;
+                case 2: truth = new Boolean(Integer.parseInt(lhs.value)>(Integer.parseInt(rhs))) ;
+//        RuleBase.appendText("\nTesting Clause " + lhs.name + " > " + rhs + " " + truth);
+                    break ;
+                case 3: truth = new Boolean(Integer.parseInt(lhs.value)<(Integer.parseInt(rhs))) ;
+//        RuleBase.appendText("\nTesting Clause " + lhs.name + " < " + rhs + " " + truth);
+                    break ;
+                case 4: truth = new Boolean(Integer.parseInt(lhs.value)!=(Integer.parseInt(rhs))) ;
+//        RuleBase.appendText("\nTesting Clause " + lhs.name + " != " + rhs + " " + truth);
+                    break ;
+            }
+
+            return truth ;
+        }
+        else {
 
             switch(cond.index) {
                 case 1: truth = new Boolean(lhs.value.equals(rhs)) ;
@@ -56,6 +75,15 @@ public class Clause {
     Rule getRule() { if (consequent.booleanValue() == true)
         return (Rule)ruleRefs.firstElement() ;
     else return null ;}
+
+    public Boolean ifInt(String s){
+        try{
+            Integer.parseInt(s);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+    }
 };
 
 

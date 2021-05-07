@@ -13,7 +13,7 @@ public class Main {
 
         //Creating the variables
         RuleVariable software_needs = new RuleVariable("software_needs") ;
-        software_needs.setLabels("user_friendly finalCutPro Gaming niche_user_interface");
+        software_needs.setLabels("user_friendly finalCutPro gaming niche_user_interface");
         rb.variableList.put(software_needs.name,software_needs) ;
 
 
@@ -37,7 +37,7 @@ public class Main {
 
 
         RuleVariable user_budget = new RuleVariable("user_budget") ;
-        user_budget.setLabels("");
+        user_budget.setLabels("200 300 400 500 600 700 800 900 1000");
         rb.variableList.put(user_budget.name,user_budget) ;
 
         RuleVariable laptop_range = new RuleVariable("laptop_range") ;
@@ -77,7 +77,7 @@ public class Main {
                 new Clause(user_budget,cMoreThan,"500"),
                 new Clause(laptop_range, cEquals, "medium"));
 
-        Rule highbudget = new Rule(rb, "FORD",
+        Rule highbudget = new Rule(rb, "si budget high",
 
                 new Clause(user_budget,cMoreThan,"1000")  ,
                 new Clause(laptop_range, cEquals, "high"));
@@ -172,7 +172,7 @@ public class Main {
         Rule asus_rog_rule = new Rule(rb, "Asus rog rule",
 
                 new Clause(os,cEquals,"windows")  ,
-                new Clause(software_needs,cEquals,"Gaming")  ,
+                new Clause(software_needs,cEquals,"gaming")  ,
                 new Clause(laptop_range,cEquals,"high"),
                 new Clause(laptop, cEquals, "Asus rog"));
 
@@ -182,5 +182,15 @@ public class Main {
                 new Clause(laptop_range,cEquals,"medium")  ,
                 new Clause(laptop, cEquals, "microsoft Surface"));
 
+
+        user_budget.setValue("1200");
+        os.setValue("windows");
+        software_needs.setValue("gaming");
+        ramVar.setValue("16");
+        rb.displayRules();
+        rb.forwardChain();
+        rb.displayVariables();
     }
+
+
 }
