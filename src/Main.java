@@ -5,6 +5,16 @@ import java.util.Vector;
 
 public class Main {
 
+    public static Clause[] clauseArray(Clause... args) {
+        Clause[] clauses= new Clause[1];
+        for (Clause arg : args) {
+            clauses[clauses.length-1]=arg;
+        }
+        System.out.println(clauses);
+        return clauses;
+    }
+
+
     public static void main(String[] args) {
         RuleBase rb = new RuleBase("Achat laptop") ;
         rb.goalClauseStack = new Stack() ;
@@ -59,131 +69,109 @@ public class Main {
         Condition cNotEquals = new Condition("!=") ;
         Condition cLessThan = new Condition("<") ;
         Condition cMoreThan = new Condition(">") ;
+        Condition cLessEqualThan= new Condition("<=");
+        Condition cMoreEqualThan= new Condition(">=");
         rb.ruleList = new Vector() ;
-
-
 
 
         // Creating rules and closes
         //Budget
+
         Rule lowbudget = new Rule(rb, "regle1:si budget<300" ,
+                clauseArray(new Clause(user_budget,cLessEqualThan,"300")),new Clause(laptop_range, cEquals, "low"));
 
-                new Clause(user_budget,cLessThan,"300")  ,
-                new Clause(laptop_range, cEquals, "low"));
 
-        Rule mediumbudget = new Rule(rb, "si budget medium",
 
-                new Clause(user_budget,cLessThan,"1000")  ,
-                new Clause(user_budget,cMoreThan,"500"),
+        Rule mediumbudget = new Rule(rb, "si budget medium",clauseArray(new Clause(user_budget,cLessThan,"1000")  ,
+                new Clause(user_budget,cMoreThan,"500")),
                 new Clause(laptop_range, cEquals, "medium"));
 
-        Rule highbudget = new Rule(rb, "si budget high",
-
-                new Clause(user_budget,cMoreThan,"1000")  ,
-                new Clause(laptop_range, cEquals, "high"));
+        Rule highbudget = new Rule(rb, "si budget high",clauseArray(new Clause(user_budget,cMoreEqualThan,"1000")),
+                 new Clause(laptop_range, cEquals, "high"));
 
 
 
         //desktop_environement rules
-        Rule os_cinamon_rule = new Rule(rb, "cinnamon rule" ,
-
-
-                new Clause(os,cEquals,"linux")  ,
-
+        Rule os_cinamon_rule = new Rule(rb, "cinnamon rule" ,clauseArray(new Clause(os,cEquals,"linux") ,
                 new Clause(laptop_range, cEquals, "low"),
-                new Clause(ramVar, cLessThan, "4"),
+                new Clause(ramVar, cLessThan, "4")),
+
                 new Clause(desktop_environement, cEquals, "cinnamon"));
 
 
-        Rule os_kde_rule = new Rule(rb, "kde_plasma rule",
-
-                new Clause(os,cEquals,"linux")  ,
-
+        Rule os_kde_rule = new Rule(rb, "kde_plasma rule",clauseArray(new Clause(os,cEquals,"linux") ,
                 new Clause(laptop_range, cEquals, "medium"),
-                new Clause(ramVar, cMoreThan, "4"),
+                new Clause(ramVar, cMoreThan, "4")),
+
                 new Clause(desktop_environement, cEquals, "kde_plasma"));
 
 
-        Rule os_xfce_rule = new Rule(rb, "xfce rule",
-
-                new Clause(os,cEquals,"linux")  ,
-
+        Rule os_xfce_rule = new Rule(rb, "xfce rule",clauseArray(new Clause(os,cEquals,"linux") ,
                 new Clause(laptop_range, cEquals, "low"),
                 new Clause(ramVar, cLessThan, "4"),
-                new Clause(software_needs, cEquals, "niche_user_interface"),
+                new Clause(software_needs, cEquals, "niche_user_interface")),
+
                 new Clause(desktop_environement,cEquals,"xfce"));
 
 
 
         //linux distribution rules
-        Rule kubuntu_rule = new Rule(rb, "kubuntu_rule" ,
-
-                new Clause(desktop_environement,cEquals,"kde_plasma")  ,
-                new Clause(linux_distro, cEquals, "Kubuntu"));
+        Rule kubuntu_rule = new Rule(rb, "kubuntu_rule" ,clauseArray(new Clause(desktop_environement,cEquals,"kde_plasma"))
+                , new Clause(linux_distro, cEquals, "Kubuntu"));
 
 
-        Rule linuxMint_rule = new Rule(rb, "linuxMint rule" ,
-                new Clause(desktop_environement,cEquals,"cinnamon")  ,
-                new Clause(linux_distro, cEquals, "LinuxMint"));
+        Rule linuxMint_rule = new Rule(rb, "linuxMint rule" ,clauseArray(new Clause(desktop_environement,cEquals,"cinnamon") )
+                 , new Clause(linux_distro, cEquals, "LinuxMint"));
 
-        Rule Manjaro_rule = new Rule(rb, "Manjaro rule" ,
 
-                new Clause(desktop_environement,cEquals,"xfce")  ,
-                new Clause(linux_distro, cEquals, "Manjaro"));
+        Rule Manjaro_rule = new Rule(rb, "Manjaro rule" ,clauseArray(new Clause(desktop_environement,cEquals,"xfce"))
+                  , new Clause(linux_distro, cEquals, "Manjaro"));
 
 
 
         //Laptop rules
-        Rule slimbook_rule = new Rule(rb, "slimBook rule" ,
+        Rule slimbook_rule = new Rule(rb, "slimBook rule" ,clauseArray(new Clause(linux_distro,cEquals,"Kubuntu"))
+                  , new Clause(laptop, cEquals, "KDE_Slimbook"));
 
-                new Clause(linux_distro,cEquals,"Kubuntu")  ,
-                new Clause(laptop, cEquals, "KDE_Slimbook"));
+        Rule lenovo_rule1 = new Rule(rb, "lenovo rule 1",clauseArray( new Clause(linux_distro,cEquals,"LinuxMint"))
+               , new Clause(laptop, cEquals, "lenovo ThinkPad X240"));
 
-        Rule lenovo_rule1 = new Rule(rb, "lenovo rule 1",
-
-                new Clause(linux_distro,cEquals,"LinuxMint"),
-                new Clause(laptop, cEquals, "lenovo ThinkPad X240"));
-
-        Rule lenovo_rule2 = new Rule(rb, "lenovo rule 2",
-
-                new Clause(linux_distro,cEquals,"Manjaro")  ,
-                new Clause(laptop, cEquals, "lenovo ThinkPad X240"));
+        Rule lenovo_rule2 = new Rule(rb, "lenovo rule 2",clauseArray(new Clause(linux_distro,cEquals,"Manjaro"))
+                  , new Clause(laptop, cEquals, "lenovo ThinkPad X240"));
 
 
 
-        Rule macBookAir_rule = new Rule(rb, "MacBookAir_rule" ,
-
-                new Clause(os,cEquals,"iOS")  ,
+        Rule macBookAir_rule = new Rule(rb, "MacBookAir_rule" ,clauseArray(new Clause(os,cEquals,"iOS")  ,
                 new Clause(laptop_range,cEquals,"medium")  ,
                 new Clause(software_needs,cEquals,"finalCutPro")  ,
-                new Clause(ramVar,cLessThan,"8")  ,
+                new Clause(ramVar,cLessThan,"8")),
+
                 new Clause(laptop, cEquals, "MacBookAir"));
 
-        Rule macBookPro_rule = new Rule(rb, "macBookPro rule",
 
-                new Clause(os,cEquals,"iOS")  ,
+        Rule macBookPro_rule = new Rule(rb, "macBookPro rule",clauseArray(new Clause(os,cEquals,"iOS")  ,
                 new Clause(laptop_range,cEquals,"high")  ,
                 new Clause(software_needs,cEquals,"finalCutPro")  ,
-                new Clause(ramVar,cMoreThan,"8")  ,
-                new Clause(laptop, cEquals, "MacBookPro"));
+                new Clause(ramVar,cMoreThan,"8"))
+
+                , new Clause(laptop, cEquals, "MacBookPro"));
 
 
 
-        Rule asus_rog_rule = new Rule(rb, "Asus rog rule",
-
-                new Clause(os,cEquals,"windows")  ,
+        Rule asus_rog_rule = new Rule(rb, "Asus rog rule",clauseArray(new Clause(os,cEquals,"windows")  ,
                 new Clause(software_needs,cEquals,"gaming")  ,
-                new Clause(laptop_range,cEquals,"high"),
-                new Clause(laptop, cEquals, "Asus rog"));
+                new Clause(laptop_range,cEquals,"high"))
 
-        Rule microsoft_rule = new Rule(rb, "microsoft surface rule" ,
-
-                new Clause(os,cEquals,"windows")  ,
-                new Clause(laptop_range,cEquals,"medium")  ,
-                new Clause(laptop, cEquals, "microsoft Surface"));
+                , new Clause(laptop, cEquals, "Asus_rog"));
 
 
-        user_budget.setValue("1200");
+        Rule microsoft_rule = new Rule(rb, "microsoft surface rule" ,clauseArray(new Clause(os,cEquals,"windows")  ,
+                new Clause(laptop_range,cEquals,"medium"))
+
+                , new Clause(laptop, cEquals, "microsoft_Surface"));
+
+
+        user_budget.setValue("1000");
         os.setValue("windows");
         software_needs.setValue("gaming");
         ramVar.setValue("16");

@@ -12,209 +12,20 @@ public class Rule {
     Clause consequent ;     //only 1 consequent clause allowed
     Boolean truth;       // states = (null=unknown, true, or false)
     boolean fired=false;
-    Rule(RuleBase Rb, String Name, Clause lhs, Clause rhs) {
+
+    Rule(RuleBase Rb, String Name, Clause clauses[], Clause rhs ) {
         rb = Rb ;
         name = Name ;
-        antecedents = new Clause[1] ;
-        antecedents[0] = lhs ;
-        lhs.addRuleRef(this) ;
-        consequent = rhs ;
+        antecedents = clauses;
+        for(int i=0;i<antecedents.length;i++){
+            antecedents[i].addRuleRef(this);
+        }
+        consequent=rhs;
         rhs.addRuleRef(this) ;
         rhs.isConsequent() ;
         rb.ruleList.addElement(this) ;  // add self to rule list
         truth = null ;
     }
-    Rule(RuleBase Rb, String Name, Clause lhss ) {
-        rb = Rb ;
-        name = Name ;
-        antecedents = new Clause[0] ;
-        antecedents[0] = lhss ;
-        lhss.addRuleRef(this) ;
-
-        rb.ruleList.addElement(this) ;  // add self to rule list
-        truth = null ;
-    }
-
-    Rule(RuleBase Rb, String Name, Clause lhs1, Clause lhs2, Clause rhs) {
-        rb = Rb ;
-        name = Name ;
-        antecedents = new Clause[2] ;
-        antecedents[0] = lhs1 ;
-        lhs1.addRuleRef(this) ;
-        antecedents[1] = lhs2 ;
-        lhs2.addRuleRef(this) ;
-        consequent = rhs ;
-        rhs.addRuleRef(this) ;
-        rhs.isConsequent() ;
-        rb.ruleList.addElement(this) ;  // add self to rule list
-        truth = null ;
-    }
-    Rule(RuleBase Rb, String Name, Clause lhs1, Clause lhs2,
-         Clause lhs3, Clause rhs) {
-        rb = Rb ;
-        name = Name ;
-        antecedents = new Clause[3] ;
-        antecedents[0] = lhs1 ;
-        lhs1.addRuleRef(this) ;
-        antecedents[1] = lhs2 ;
-        lhs2.addRuleRef(this) ;
-        antecedents[2] = lhs3 ;
-        lhs3.addRuleRef(this) ;
-        consequent = rhs ;
-        rhs.addRuleRef(this) ;
-        rhs.isConsequent() ;
-        rb.ruleList.addElement(this) ;  // add self to rule list
-        truth = null ;
-    }
-    Rule(RuleBase Rb, String Name, Clause lhs1, Clause lhs2,
-         Clause lhs3, Clause lhs4,
-         Clause rhs) {
-        rb = Rb ;
-        name = Name ;
-        antecedents = new Clause[4] ;
-        antecedents[0] = lhs1 ;
-        lhs1.addRuleRef(this) ;
-        antecedents[1] = lhs2 ;
-        lhs2.addRuleRef(this) ;
-        antecedents[2] = lhs3 ;
-        lhs3.addRuleRef(this) ;
-        antecedents[3] = lhs4 ;
-        lhs4.addRuleRef(this) ;
-        consequent = rhs ;
-        rhs.addRuleRef(this) ;
-        rhs.isConsequent() ;
-        rb.ruleList.addElement(this) ;  // add self to rule list
-        truth = null ;
-    }
-    Rule(RuleBase Rb, String Name, Clause lhs1, Clause lhs2,Clause lhs3, Clause lhs4,Clause lhs5, Clause rhs) {
-        rb = Rb ;
-        name = Name ;
-        antecedents = new Clause[5] ;
-        antecedents[0] = lhs1 ;
-        lhs1.addRuleRef(this) ;
-        antecedents[1] = lhs2 ;
-        lhs2.addRuleRef(this) ;
-        antecedents[2] = lhs3 ;
-        lhs3.addRuleRef(this) ;
-        antecedents[3] = lhs4 ;
-        lhs4.addRuleRef(this) ;
-        antecedents[4] = lhs5 ;
-        lhs5.addRuleRef(this) ;
-        consequent = rhs ;
-        rhs.addRuleRef(this) ;
-        rhs.isConsequent() ;
-        rb.ruleList.addElement(this) ;  // add self to rule list
-        truth = null ;
-    }
-    //////modif
-    Rule(RuleBase Rb, String Name, Clause lhs1, Clause lhs2,
-         Clause lhs3, Clause lhs4,Clause lhs5,
-         Clause rhs12,Clause rhs) {
-        rb = Rb ;
-        name = Name ;
-        antecedents = new Clause[6] ;
-        antecedents[0] = lhs1 ;
-        lhs1.addRuleRef(this) ;
-        antecedents[1] = lhs2 ;
-        lhs2.addRuleRef(this) ;
-        antecedents[2] = lhs3 ;
-        lhs3.addRuleRef(this) ;
-        antecedents[3] = lhs4 ;
-        lhs4.addRuleRef(this) ;
-        antecedents[4] = lhs5 ;
-        lhs5.addRuleRef(this) ;
-        antecedents[5] = rhs12 ;
-        rhs12.addRuleRef(this) ;
-        consequent = rhs ;
-        rhs.addRuleRef(this) ;
-        rhs.isConsequent() ;
-        rb.ruleList.addElement(this) ;  // add self to rule list
-        truth = null ;
-    }
-
-    Rule(RuleBase Rb, String Name, Clause lhs1, Clause lhs2, Clause lhs3, Clause lhs4, Clause lhs5, Clause lhs6, Clause lhs7, Clause lhs8, Clause lhs9, Clause lhs10, Clause lhs11, Clause lhs12, Clause lhs13, Clause rhs) {
-        rb = Rb ;
-        name = Name ;
-        antecedents = new Clause[13] ;
-        antecedents[0] = lhs1 ;
-        lhs1.addRuleRef(this) ;
-        antecedents[1] = lhs2 ;
-        lhs2.addRuleRef(this) ;
-        ////
-        antecedents[2] = lhs3 ;
-        lhs3.addRuleRef(this) ;
-        antecedents[3] = lhs4 ;
-        lhs4.addRuleRef(this) ;
-        antecedents[4] = lhs5 ;
-        lhs5.addRuleRef(this) ;
-        antecedents[5] = lhs6 ;
-        lhs6.addRuleRef(this) ;
-        antecedents[6] = lhs7 ;
-        lhs7.addRuleRef(this) ;
-        antecedents[7] = lhs8 ;
-        lhs8.addRuleRef(this) ;
-        antecedents[8] = lhs9 ;
-        lhs9.addRuleRef(this) ;
-        antecedents[9] = lhs10 ;
-        lhs10.addRuleRef(this) ;
-        antecedents[10] = lhs11 ;
-        lhs11.addRuleRef(this) ;
-
-        antecedents[11] = lhs12 ;
-        lhs12.addRuleRef(this) ;
-        antecedents[12] = lhs13 ;
-        lhs13.addRuleRef(this) ;
-
-        ///
-        consequent = rhs ;
-        rhs.addRuleRef(this) ;
-        rhs.isConsequent() ;
-        rb.ruleList.addElement(this) ;  // add self to rule list
-        truth = null ;
-    }
-
-    Rule(RuleBase Rb, String Name, Clause lhs1, Clause lhs2, Clause lhs3, Clause lhs4, Clause lhs5, Clause lhs6, Clause lhs7, Clause lhs8, Clause lhs9, Clause lhs10, Clause lhs11, Clause lhs12,Clause rhs) {
-        rb = Rb ;
-        name = Name ;
-        antecedents = new Clause[12] ;
-        antecedents[0] = lhs1 ;
-        lhs1.addRuleRef(this) ;
-        antecedents[1] = lhs2 ;
-        lhs2.addRuleRef(this) ;
-        ////
-        antecedents[2] = lhs3 ;
-        lhs3.addRuleRef(this) ;
-        antecedents[3] = lhs4 ;
-        lhs4.addRuleRef(this) ;
-        antecedents[4] = lhs5 ;
-        lhs5.addRuleRef(this) ;
-        antecedents[5] = lhs6 ;
-        lhs6.addRuleRef(this) ;
-        antecedents[6] = lhs7 ;
-        lhs7.addRuleRef(this) ;
-        antecedents[7] = lhs8 ;
-        lhs8.addRuleRef(this) ;
-        antecedents[8] = lhs9 ;
-        lhs9.addRuleRef(this) ;
-        antecedents[9] = lhs10 ;
-        lhs10.addRuleRef(this) ;
-        antecedents[10] = lhs11 ;
-        lhs11.addRuleRef(this) ;
-
-        antecedents[11] = lhs12 ;
-        lhs12.addRuleRef(this) ;
-
-
-        ///
-        consequent = rhs ;
-        rhs.addRuleRef(this) ;
-        rhs.isConsequent() ;
-        rb.ruleList.addElement(this) ;  // add self to rule list
-        truth = null ;
-    }
-
-//////
-
 
     long numAntecedents() { return antecedents.length; }
 
@@ -228,6 +39,7 @@ public class Rule {
             }
         }
     }
+
 
     // used by forward chaining only !
     Boolean check() {  // if antecedent is true and rule has not fired
@@ -243,11 +55,13 @@ public class Rule {
         return truth = new Boolean(true) ;  // could fire this rule
     }
 
+
     // used by forward chaining only !
     // fire this rule -- perform the consequent clause
     // if a variable is changes, update all clauses where
     //  it is references, and then all rules which contain
     //  those clauses
+
     void fire() {
         RuleBase.appendText("\nFiring rule " + name ) ;
         truth = new Boolean(true) ;
@@ -261,6 +75,7 @@ public class Rule {
     // determine is a rule is true or false
     // by recursively trying to prove its antecedent clauses are true
     // if any are false, the rule is false
+
     Boolean backChain()
     {
         RuleBase.appendText("\nEvaluating rule " + name) ;

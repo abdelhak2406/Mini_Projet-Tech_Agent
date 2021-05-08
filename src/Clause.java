@@ -36,16 +36,16 @@ public class Clause {
         if(ifInt(rhs)){
             switch(cond.index) {
                 case 1: truth = new Boolean(Integer.parseInt(lhs.value)==(Integer.parseInt(rhs))) ;
-//        RuleBase.appendText("\nTesting Clause " + lhs.name + " = " + rhs + " " + truth);
                     break ;
                 case 2: truth = new Boolean(Integer.parseInt(lhs.value)>(Integer.parseInt(rhs))) ;
-//        RuleBase.appendText("\nTesting Clause " + lhs.name + " > " + rhs + " " + truth);
                     break ;
                 case 3: truth = new Boolean(Integer.parseInt(lhs.value)<(Integer.parseInt(rhs))) ;
-//        RuleBase.appendText("\nTesting Clause " + lhs.name + " < " + rhs + " " + truth);
                     break ;
                 case 4: truth = new Boolean(Integer.parseInt(lhs.value)!=(Integer.parseInt(rhs))) ;
-//        RuleBase.appendText("\nTesting Clause " + lhs.name + " != " + rhs + " " + truth);
+                    break ;
+                case 5: truth = new Boolean(Integer.parseInt(lhs.value)>=(Integer.parseInt(rhs))) ;
+                    break ;
+                case 6: truth = new Boolean(Integer.parseInt(lhs.value)<=(Integer.parseInt(rhs))) ;
                     break ;
             }
 
@@ -55,22 +55,19 @@ public class Clause {
 
             switch(cond.index) {
                 case 1: truth = new Boolean(lhs.value.equals(rhs)) ;
-//        RuleBase.appendText("\nTesting Clause " + lhs.name + " = " + rhs + " " + truth);
                     break ;
                 case 2: truth = new Boolean(lhs.value.compareTo(rhs) > 0) ;
-//        RuleBase.appendText("\nTesting Clause " + lhs.name + " > " + rhs + " " + truth);
                     break ;
                 case 3: truth = new Boolean(lhs.value.compareTo(rhs) < 0) ;
-//        RuleBase.appendText("\nTesting Clause " + lhs.name + " < " + rhs + " " + truth);
                     break ;
                 case 4: truth = new Boolean(lhs.value.compareTo(rhs) != 0) ;
-//        RuleBase.appendText("\nTesting Clause " + lhs.name + " != " + rhs + " " + truth);
                     break ;
             }
 
             return truth ;
         }
     }
+
     void isConsequent() { consequent = new Boolean(true); }
     Rule getRule() { if (consequent.booleanValue() == true)
         return (Rule)ruleRefs.firstElement() ;

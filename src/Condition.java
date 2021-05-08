@@ -13,6 +13,8 @@ public class Condition {
         else if (Symbol.equals(">")) index = 2 ;
         else if (Symbol.equals("<")) index = 3 ;
         else if (Symbol.equals("!=")) index = 4 ;
+        else if(Symbol.equals(">=")) index=5;
+        else if(Symbol.equals("<=")) index=6;
         else index = -1 ;
     }
     String asString() {
@@ -25,6 +27,10 @@ public class Condition {
             case 3: temp = "<" ;
                 break;
             case 4: temp = "!=" ;
+                break;
+            case 5: temp = ">=" ;
+                break;
+            case 6: temp = "<=" ;
                 break;
         }
         return temp ;
