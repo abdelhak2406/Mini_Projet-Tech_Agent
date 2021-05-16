@@ -1,4 +1,5 @@
 
+import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Stack;
 import java.util.Vector;
@@ -6,12 +7,15 @@ import java.util.Vector;
 public class Main {
 
     public static Clause[] clauseArray(Clause... args) {
-        Clause[] clauses= new Clause[1];
+        ArrayList<Clause> clauses= new ArrayList<>();
         for (Clause arg : args) {
-            clauses[clauses.length-1]=arg;
+            clauses.add(arg);
         }
-        System.out.println(clauses);
-        return clauses;
+        Clause[] array= new Clause[clauses.size()];
+        for(int i=0;i<clauses.size();i++){
+            array[i]=clauses.get(i);
+        }
+        return array;
     }
 
 
@@ -23,7 +27,6 @@ public class Main {
 
         //Creating the variables
         RuleVariable software_needs = new RuleVariable("software_needs") ;
-        software_needs.setLabels("user_friendly finalCutPro gaming niche_user_interface");
         rb.variableList.put(software_needs.name,software_needs) ;
 
 
@@ -32,30 +35,24 @@ public class Main {
         rb.variableList.put(os.name,os) ;
 
         RuleVariable linux_distro = new RuleVariable("linux_distro") ;
-        linux_distro.setLabels("Manjaro linuxMint Kubuntu");
         rb.variableList.put(linux_distro.name,linux_distro) ;
 
 
         RuleVariable ramVar = new RuleVariable("RAM") ;
-        ramVar.setLabels("2 4 8 12 16");
         rb.variableList.put(ramVar.name,ramVar) ;
 
 
         RuleVariable desktop_environement = new RuleVariable("desktop_environement") ;
-        desktop_environement.setLabels("kde_plasma xfce cinamone");
         rb.variableList.put(desktop_environement.name,desktop_environement) ;
 
 
         RuleVariable user_budget = new RuleVariable("user_budget") ;
-        user_budget.setLabels("200 300 400 500 600 700 800 900 1000");
         rb.variableList.put(user_budget.name,user_budget) ;
 
         RuleVariable laptop_range = new RuleVariable("laptop_range") ;
-        laptop_range.setLabels("low medium high");
         rb.variableList.put(laptop_range.name,laptop_range) ;
 
         RuleVariable laptop = new RuleVariable("laptop") ;
-        laptop.setLabels("Macbook_air macbook_Pro KDE_slimbook Lenovo_thinkpad_X240 asus_rog microsoft_Surface");
         rb.variableList.put(laptop.name,laptop) ;
 
 
@@ -171,10 +168,10 @@ public class Main {
                 , new Clause(laptop, cEquals, "microsoft_Surface"));
 
 
-        user_budget.setValue("1000");
-        os.setValue("windows");
-        software_needs.setValue("gaming");
-        ramVar.setValue("16");
+        user_budget.setValue("999");
+        os.setValue("iOS");
+        software_needs.setValue("finalCutPro");
+        ramVar.setValue("7");
         rb.displayRules();
         rb.forwardChain();
         rb.displayVariables();

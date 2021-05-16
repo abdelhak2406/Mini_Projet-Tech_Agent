@@ -43,15 +43,17 @@ public class Rule {
 
     // used by forward chaining only !
     Boolean check() {  // if antecedent is true and rule has not fired
-        RuleBase.appendText("\nTesting rule " + name ) ;
+        //RuleBase.appendText("\nTesting rule " + name ) ;
         for (int i=0 ; i < antecedents.length ; i++ ) {
             if (antecedents[i].truth == null) return null ;
             if (antecedents[i].truth.booleanValue() == true) {
                 continue ;
             } else {
+                System.out.println("rule : "+name+" not fired");
                 return truth = new Boolean(false) ; //don't fire this rule
             }
         } // endfor
+        System.out.println("rule : "+name+" fired.");
         return truth = new Boolean(true) ;  // could fire this rule
     }
 

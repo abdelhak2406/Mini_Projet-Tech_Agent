@@ -33,6 +33,13 @@ public class RuleVariable extends Variable {
     public void computeStatistics(String inValue){} ;
     public int normalize(String inValue, float[] outArray, int inx) {return inx;}
 
+    @Override
+    public String toString() {
+        return "RuleVariable{" +
+                "name='" + name + '\'' +
+                ", value='" + value + '\'' +
+                '}';
+    }
 };
 
 

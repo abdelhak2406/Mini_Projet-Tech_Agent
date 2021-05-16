@@ -66,6 +66,7 @@ public class Clause {
 
             return truth ;
         }
+
     }
 
     void isConsequent() { consequent = new Boolean(true); }
@@ -80,6 +81,13 @@ public class Clause {
         }catch (Exception e){
             return false;
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Clause{" +
+                "rhs='" + rhs + '\'' +
+                '}';
     }
 };
 
