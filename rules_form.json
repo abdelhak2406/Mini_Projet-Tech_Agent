@@ -1,0 +1,64 @@
+{"carRule": {
+    "variables":{
+        "var1":{
+            "lables":
+            {
+                "baba",
+                "a",
+                "a"
+            }
+        },
+        "var2":{
+
+        }
+    },
+    "rules":{
+        "rule1":{
+            "clauses":{
+                "clause1":{
+                    "rulesVars":{
+
+                    },
+                    "condition": {" ect"},
+                    "rhs":{
+
+                    }
+                },
+                "clause2":{
+                    "rulesVars":{
+
+                },
+                "condition": "= ect",
+                "rhs":{
+                    
+                    }
+                }
+            }, 
+            "consequences":"cons"
+    },
+    "rule2":{
+            "clauses":{
+                "clause1":{
+                    "rulesVars":{
+
+                    },
+                    "condition": {" ect"},
+                    "rhs":{
+
+                    }
+                },
+                "clause2":{
+                    "rulesVars":{
+
+                },
+                "condition": "= ect",
+                "rhs":{
+                    
+                    }
+                }
+            }, 
+            "consequences":"cons"
+
+
+}
+

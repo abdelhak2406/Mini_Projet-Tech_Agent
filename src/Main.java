@@ -20,7 +20,7 @@ public class Main {
 
 
     public static void main(String[] args) {
-        RuleBase rb = new RuleBase("Achat laptop") ;
+        RuleBase rb = new RuleBase("Achat_laptop") ;
         rb.goalClauseStack = new Stack() ;
         rb.variableList = new Hashtable() ;
 
@@ -47,6 +47,7 @@ public class Main {
 
 
         RuleVariable user_budget = new RuleVariable("user_budget") ;
+        //user_budget.setLabels("200 300 400 500 600 700 800 900 1000");
         rb.variableList.put(user_budget.name,user_budget) ;
 
         RuleVariable laptop_range = new RuleVariable("laptop_range") ;
@@ -74,39 +75,48 @@ public class Main {
         // Creating rules and closes
         //Budget
 
-        Rule lowbudget = new Rule(rb, "regle1:si budget<300" ,
-                clauseArray(new Clause(user_budget,cLessEqualThan,"300")),new Clause(laptop_range, cEquals, "low"));
+        Rule lowbudget = new Rule(rb, "budget_low" ,
+                clauseArray(
+                    new Clause(user_budget,cLessEqualThan,"300")),
+                new Clause(laptop_range, cEquals, "low"));
 
 
 
-        Rule mediumbudget = new Rule(rb, "si budget medium",clauseArray(new Clause(user_budget,cLessThan,"1000")  ,
-                new Clause(user_budget,cMoreThan,"500")),
+        Rule mediumbudget = new Rule(rb, "budget_medium",
+                clauseArray(
+                        new Clause(user_budget,cLessEqualThan,"1000")  ,
+                        new Clause(user_budget,cMoreThan,"300")),
                 new Clause(laptop_range, cEquals, "medium"));
 
-        Rule highbudget = new Rule(rb, "si budget high",clauseArray(new Clause(user_budget,cMoreEqualThan,"1000")),
-                 new Clause(laptop_range, cEquals, "high"));
+        Rule highbudget = new Rule(rb, "budget_high",
+                clauseArray(
+                        new Clause(user_budget,cMoreThan,"1000")),
+                new Clause(laptop_range, cEquals, "high"));
 
 
 
         //desktop_environement rules
-        Rule os_cinamon_rule = new Rule(rb, "cinnamon rule" ,clauseArray(new Clause(os,cEquals,"linux") ,
-                new Clause(laptop_range, cEquals, "low"),
-                new Clause(ramVar, cLessThan, "4")),
-
+        Rule os_cinamon_rule = new Rule(rb, "cinnamon_rule" ,
+                clauseArray(
+                    new Clause(os,cEquals,"linux") ,
+                    new Clause(laptop_range, cEquals, "low"),
+                    new Clause(ramVar, cLessThan, "4")),
                 new Clause(desktop_environement, cEquals, "cinnamon"));
 
 
-        Rule os_kde_rule = new Rule(rb, "kde_plasma rule",clauseArray(new Clause(os,cEquals,"linux") ,
-                new Clause(laptop_range, cEquals, "medium"),
-                new Clause(ramVar, cMoreThan, "4")),
-
+        Rule os_kde_rule = new Rule(rb, "kde_plasma_rule",
+                clauseArray(
+                    new Clause(os,cEquals,"linux") ,
+                    new Clause(laptop_range, cEquals, "medium"),
+                    new Clause(ramVar, cMoreThan, "4")),
                 new Clause(desktop_environement, cEquals, "kde_plasma"));
 
 
-        Rule os_xfce_rule = new Rule(rb, "xfce rule",clauseArray(new Clause(os,cEquals,"linux") ,
-                new Clause(laptop_range, cEquals, "low"),
-                new Clause(ramVar, cLessThan, "4"),
-                new Clause(software_needs, cEquals, "niche_user_interface")),
+        Rule os_xfce_rule = new Rule(rb, "xfce_rule",
+                clauseArray(new Clause(os,cEquals,"linux") ,
+                    new Clause(laptop_range, cEquals, "low"),
+                    new Clause(ramVar, cLessThan, "4"),
+                    new Clause(software_needs, cEquals, "niche_user_interface")),
 
                 new Clause(desktop_environement,cEquals,"xfce"));
 
@@ -117,12 +127,14 @@ public class Main {
                 , new Clause(linux_distro, cEquals, "Kubuntu"));
 
 
-        Rule linuxMint_rule = new Rule(rb, "linuxMint rule" ,clauseArray(new Clause(desktop_environement,cEquals,"cinnamon") )
+        Rule linuxMint_rule = new Rule(rb, "linuxMint_rule" ,clauseArray(new Clause(desktop_environement,cEquals,"cinnamon") )
                  , new Clause(linux_distro, cEquals, "LinuxMint"));
 
 
-        Rule Manjaro_rule = new Rule(rb, "Manjaro rule" ,clauseArray(new Clause(desktop_environement,cEquals,"xfce"))
-                  , new Clause(linux_distro, cEquals, "Manjaro"));
+        Rule Manjaro_rule = new Rule(rb, "Manjaro_rule" ,
+                clauseArray(
+                        new Clause(desktop_environement,cEquals,"xfce")),
+                new Clause(linux_distro, cEquals, "Manjaro"));
 
 
 

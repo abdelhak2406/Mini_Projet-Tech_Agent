@@ -1,0 +1,5 @@
+#+TITLE: Understand
+#+AUTHOR: Abdelhak aissat
+
+
+* BooleanRuleBasse OBject ?

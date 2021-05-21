@@ -5,6 +5,10 @@ import java.awt.* ;
 
 public class RuleVariable extends Variable {
 
+    Vector clauseRefs ;   // clauses which refer to this var
+    String promptText ;  // used to prompt user for value
+    String ruleName ;      // if value is inferred, null = user provided
+
     public RuleVariable(String Name) {
         super(Name);
         clauseRefs = new Vector();
@@ -14,7 +18,6 @@ public class RuleVariable extends Variable {
         updateClauses(); }
 
 
-    Vector clauseRefs ;   // clauses which refer to this var
     void addClauseRef(Clause ref) { clauseRefs.addElement(ref) ; }
 
     void updateClauses() {
@@ -24,11 +27,9 @@ public class RuleVariable extends Variable {
         }
     }
 
-    String promptText ;  // used to prompt user for value
-    String ruleName ;      // if value is inferred, null = user provided
+
     void   setRuleName(String rname) { ruleName = rname; }
     void   setPromptText(String text) { promptText = text; }
-
     // these methods are not used in rule variables
     public void computeStatistics(String inValue){} ;
     public int normalize(String inValue, float[] outArray, int inx) {return inx;}

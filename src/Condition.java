@@ -13,8 +13,8 @@ public class Condition {
         else if (Symbol.equals(">")) index = 2 ;
         else if (Symbol.equals("<")) index = 3 ;
         else if (Symbol.equals("!=")) index = 4 ;
-        else if(Symbol.equals(">=")) index=5;
-        else if(Symbol.equals("<=")) index=6;
+        else if(Symbol.equals(">=")) index = 5;
+        else if(Symbol.equals("<=")) index = 6;
         else index = -1 ;
     }
     String asString() {
