@@ -1,0 +1,94 @@
+{
+    "ruleBaseName": "",
+    "variables": [
+        {
+            "name": "",
+            "labels": []
+        },
+        {
+            "name": "",
+            "labels": [
+                "",
+                "",
+                ""
+            ]
+        },
+        {
+            "name": "l",
+            "labels": []
+        },
+        {
+            "name": "",
+            "labels": []
+        },
+        {
+            "name": "",
+            "labels": []
+        },
+        {
+            "name": "",
+            "labels": []
+        },
+        {
+            "name": "",
+            "labels": []
+        },
+        {
+            "name": "",
+            "labels": []
+        }
+    ],
+    "rules": [
+        {
+            "name": "",
+            "antecedents": [
+                {
+                    "ruleVar": "",
+                    "condition": "",
+                    "rhs": ""
+                }
+            ],
+            "consequence": {
+                "ruleVar": "",
+                "condition": "",
+                "rhs": ""
+            }
+        },
+        {
+            "name": "",
+            "antecedents": [
+                {
+                    "ruleVar": "",
+                    "condition": "",
+                    "rhs": ""
+                },
+                {
+                    "ruleVar": "",
+                    "condition": "",
+                    "rhs": ""
+                }
+            ],
+            "consequence": {
+                "ruleVar": "",
+                "condition": "",
+                "rhs": ""
+            }
+        },
+        {
+            "name": "",
+            "antecedents": [
+                {
+                    "ruleVar": "",
+                    "condition": "",
+                    "rhs": ""
+                }
+            ],
+            "consequece": {
+                    "ruleVar": "",
+                    "condition": "",
+                    "rhs": ""
+            }
+        }
+    ]
+}
+

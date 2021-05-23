@@ -1,3 +1,4 @@
+package rule;
 
 //une partie de la ligne (ex : budget>300)
 /*  Clause class

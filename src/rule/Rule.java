@@ -1,4 +1,4 @@
-
+package rule;
 //La ligne complete
 /*
 * definir une seul régle, exemple :"si voirure=btw et nbr roue=17 alors type_voirure=inexistant";
@@ -97,10 +97,10 @@ public class Rule {
             if (antecedents[i].truth.booleanValue() == true) {
                 continue ;    // test the next antecedent (if any)
             } else {
-                return truth = new Boolean(false) ; // exit, if any are false
+                return truth = false ; // exit, if any are false
             }
         } // endfor
-        return truth = new Boolean(true) ; // all antecedents are true
+        return truth = true ; // all antecedents are true
     }
 
     // display the rule in text format
@@ -114,9 +114,8 @@ public class Rule {
                     nextClause.cond.asString() +
                     nextClause.rhs + " ") ;
             //TODO: find out why this part is never executed.
-            if ((i+1) < antecedents.length) System.out.println("\n     AND ") ;
+            if ((i+1) < antecedents.length) System.out.println(" AND ") ;
         }
-        System.out.println("antecedent length for this rule="+antecedents.length);
         System.out.println("\n     THEN ") ;
         System.out.println(consequent.lhs.name +
                 consequent.cond.asString() +

@@ -1,0 +1,370 @@
+{
+  "ruleBaseName": "achat_laptop",
+  "variables": [
+    {
+      "name": "software_needs",
+      "labels": []
+    },
+    {
+      "name": "os",
+      "labels": [
+        "linux",
+        "windows",
+        "ios"
+      ]
+    },
+    {
+      "name": "linux_distro",
+      "labels": []
+    },
+    {
+      "name": "ram",
+      "labels": []
+    },
+    {
+      "name": "desktop_environement",
+      "labels": []
+    },
+    {
+      "name": "user_budget",
+      "labels": []
+    },
+    {
+      "name": "laptop_range",
+      "labels": []
+    },
+    {
+      "name": "laptop",
+      "labels": []
+    }
+  ],
+  "rules": [
+    {
+      "name": "budget_low",
+      "antecedents": [
+        {
+          "ruleVar": "user_budget",
+          "condition": "<=",
+          "rhs": "300"
+        }
+      ],
+      "consequence": {
+        "ruleVar": "laptop_range",
+        "condition": "=",
+        "rhs": "low"
+      }
+    },
+    {
+      "name": "budget_medium",
+      "antecedents": [
+        {
+          "ruleVar": "user_budget",
+          "condition": ">",
+          "rhs": "300"
+        },
+        {
+          "ruleVar": "user_budget",
+          "condition": "<=",
+          "rhs": "1000"
+        }
+      ],
+      "consequence": {
+        "ruleVar": "laptop_range",
+        "condition": "=",
+        "rhs": "medium"
+      }
+    },
+    {
+      "name": "budget_high",
+      "antecedents": [
+        {
+          "ruleVar": "user_budget",
+          "condition": ">",
+          "rhs": "1000"
+        }
+      ],
+      "consequence": {
+        "ruleVar": "laptop_range",
+        "condition": "=",
+        "rhs": "high"
+      }
+    },
+    {
+      "name": "cinnamon_rule",
+      "antecedents": [
+        {
+          "ruleVar": "os",
+          "condition": "=",
+          "rhs": "linux"
+        },
+        {
+          "ruleVar": "laptop_range",
+          "condition": "=",
+          "rhs": "low"
+        },
+        {
+          "ruleVar": "ram",
+          "condition": "<",
+          "rhs": "4"
+        }
+      ],
+      "consequence":{
+        "ruleVar": "desktop_environement",
+        "condition": "=",
+        "rhs": "cinnamon"
+      }
+    },
+    {
+      "name": "kde_plasma_rule",
+      "antecedents": [
+        {
+          "ruleVar": "os",
+          "condition": "=",
+          "rhs": "linux"
+        },
+        {
+          "ruleVar": "laptop_range",
+          "condition": "=",
+          "rhs": "medium"
+        },
+        {
+          "ruleVar": "ram",
+          "condition": ">",
+          "rhs": "4"
+        }
+      ],
+      "consequence":{
+        "ruleVar": "desktop_environement",
+        "condition": "=",
+        "rhs": "kde_plasma"
+      }
+    },
+    {
+      "name": "xfce_rule",
+      "antecedents": [
+        {
+          "ruleVar": "os",
+          "condition": "=",
+          "rhs": "linux"
+        },
+        {
+          "ruleVar": "laptop_range",
+          "condition": "=",
+          "rhs": "low"
+        },
+        {
+          "ruleVar": "ram",
+          "condition": "<",
+          "rhs": "4"
+        },
+        {
+          "ruleVar": "software_needs",
+          "condition": "=",
+          "rhs": "niche_user_interface"
+        }
+      ],
+      "consequence":{
+        "ruleVar": "desktop_environement",
+        "condition": "=",
+        "rhs": "xfce"
+
+      }
+    },
+    {
+      "name": "kubuntu_rule",
+      "antecedents": [
+        {
+          "ruleVar": "desktop_environement",
+          "condition": "=",
+          "rhs": "kde_plasma"
+        }
+      ],
+      "consequence": {
+        "ruleVar": "linux_distro",
+        "condition": "=",
+        "rhs": "Kubuntu"
+      }
+    },
+    {
+      "name": "linuxMint_rule",
+      "antecedents": [
+        {
+          "ruleVar": "desktop_environement",
+          "condition": "=",
+          "rhs": "cinnamon"
+        }
+      ],
+      "consequence": {
+        "ruleVar": "linux_distro",
+        "condition": "=",
+        "rhs": "LinuxMint"
+      }
+    },
+    {
+      "name": "manjaro_rule",
+      "antecedents": [
+        {
+          "ruleVar": "desktop_environement",
+          "condition": "=",
+          "rhs": "xfce"
+        }
+      ],
+      "consequence": {
+        "ruleVar": "linux_distro",
+        "condition": "=",
+        "rhs": "Manjaro"
+      }
+    },
+    {
+      "name": "slimBook_rule",
+      "antecedents": [
+        {
+          "ruleVar": "linux_distro",
+          "condition": "=",
+          "rhs": "Kubuntu"
+        }
+      ],
+      "consequence": {
+        "ruleVar": "laptop",
+        "condition": "=",
+        "rhs": "KDE_Slimebook"
+      }
+    },
+    {
+      "name": "lenovo_rule1",
+      "antecedents": [
+        {
+          "ruleVar": "linux_distro",
+          "condition": "=",
+          "rhs": "LinuxMint"
+        }
+      ],
+      "consequence": {
+        "ruleVar": "laptop",
+        "condition": "=",
+        "rhs": "Lenovo_Thinkpad_X240"
+      }
+    },
+    {
+      "name": "lenovo_rule2",
+      "antecedents": [
+        {
+          "ruleVar": "linux_distro",
+          "condition": "=",
+          "rhs": "Manjaro"
+        }
+      ],
+      "consequence": {
+        "ruleVar": "laptop",
+        "condition": "=",
+        "rhs": "Lenovo_Thinkpad_X240"
+      }
+    },
+    {
+      "name": "MacBookAir_rule",
+      "antecedents": [
+        {
+          "ruleVar": "os",
+          "condition": "=",
+          "rhs": "iOS"
+        },
+        {
+          "ruleVar": "laptop_range",
+          "condition": "=",
+          "rhs": "medium"
+        },
+        {
+          "ruleVar": "software_needs",
+          "condition": "=",
+          "rhs": "finalCutPro"
+        },
+        {
+          "ruleVar": "ram",
+          "condition": "<",
+          "rhs": "8"
+        }
+      ],
+      "consequence": {
+        "ruleVar": "laptop",
+        "condition": "=",
+        "rhs": "MacBookAir"
+      }
+    },
+    {
+      "name": "MacBookPro_rule",
+      "antecedents": [
+        {
+          "ruleVar": "os",
+          "condition": "=",
+          "rhs": "iOS"
+        },
+        {
+          "ruleVar": "laptop_range",
+          "condition": "=",
+          "rhs": "high"
+        },
+        {
+          "ruleVar": "software_needs",
+          "condition": "=",
+          "rhs": "finalCutPro"
+        },
+        {
+          "ruleVar": "ram",
+          "condition": ">",
+          "rhs": "8"
+        }
+      ],
+      "consequence": {
+        "ruleVar": "laptop",
+        "condition": "=",
+        "rhs": "MacBookPro"
+      }
+    },
+    {
+      "name": "asusRog_rule",
+      "antecedents": [
+        {
+          "ruleVar": "os",
+          "condition": "=",
+          "rhs": "windows"
+        },
+        {
+          "ruleVar": "software_needs",
+          "condition": "=",
+          "rhs": "gaming"
+        },
+        {
+          "ruleVar": "laptop_range",
+          "condition": "=",
+          "rhs": "high"
+        }
+      ],
+      "consequence": {
+        "ruleVar": "laptop",
+        "condition": "=",
+        "rhs": "AsusRog"
+      }
+
+    },
+    {
+    "name": "microsoftSurface_rule",
+    "antecedents": [
+      {
+        "ruleVar": "os",
+        "condition": "=",
+        "rhs": "windows"
+      },
+      {
+        "ruleVar": "laptop_range",
+        "condition": "=",
+        "rhs": "medium"
+      }
+    ],
+    "consequence": {
+      "ruleVar": "laptop",
+      "condition": "=",
+      "rhs": "microsoftSurface"
+    }
+    }
+  ]
+}

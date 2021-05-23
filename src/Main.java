@@ -1,185 +1,28 @@
+//TODO:add a switch between the car rules and our own rules
 
-import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.Stack;
-import java.util.Vector;
+import java.util.*;
+
+import rule.JsonToRule;
+import rule.RuleBase;
+import rule.RuleVariable;
 
 public class Main {
 
-    public static Clause[] clauseArray(Clause... args) {
-        ArrayList<Clause> clauses= new ArrayList<>();
-        for (Clause arg : args) {
-            clauses.add(arg);
-        }
-        Clause[] array= new Clause[clauses.size()];
-        for(int i=0;i<clauses.size();i++){
-            array[i]=clauses.get(i);
-        }
-        return array;
-    }
 
 
-    public static void main(String[] args) {
-        RuleBase rb = new RuleBase("Achat_laptop") ;
-        rb.goalClauseStack = new Stack() ;
-        rb.variableList = new Hashtable() ;
+    public static void main(String[] args) throws Exception {
+    //Create the rules
+       JsonToRule rules = new JsonToRule("resources/achat_laptop.json") ;
+       Map variableObjects  = rules.getVariableObjects() ;
+       Map rulesObjects  = rules.getRuleObjects() ;
 
+       RuleVariable user_budget = (RuleVariable) variableObjects.get("user_budget");
+       RuleVariable os = (RuleVariable) variableObjects.get("os");
+       RuleVariable software_needs = (RuleVariable) variableObjects.get("software_needs");
+       RuleVariable ramVar = (RuleVariable) variableObjects.get("ram");
+       RuleBase rb = rules.getRb() ;
 
-        //Creating the variables
-        RuleVariable software_needs = new RuleVariable("software_needs") ;
-        rb.variableList.put(software_needs.name,software_needs) ;
-
-
-        RuleVariable os = new RuleVariable("OS") ;
-        os.setLabels("linux windows iOS ");
-        rb.variableList.put(os.name,os) ;
-
-        RuleVariable linux_distro = new RuleVariable("linux_distro") ;
-        rb.variableList.put(linux_distro.name,linux_distro) ;
-
-
-        RuleVariable ramVar = new RuleVariable("RAM") ;
-        rb.variableList.put(ramVar.name,ramVar) ;
-
-
-        RuleVariable desktop_environement = new RuleVariable("desktop_environement") ;
-        rb.variableList.put(desktop_environement.name,desktop_environement) ;
-
-
-        RuleVariable user_budget = new RuleVariable("user_budget") ;
-        //user_budget.setLabels("200 300 400 500 600 700 800 900 1000");
-        rb.variableList.put(user_budget.name,user_budget) ;
-
-        RuleVariable laptop_range = new RuleVariable("laptop_range") ;
-        rb.variableList.put(laptop_range.name,laptop_range) ;
-
-        RuleVariable laptop = new RuleVariable("laptop") ;
-        rb.variableList.put(laptop.name,laptop) ;
-
-
-
-
-
-
-        // Note: at this point all variables values are NULL
-        //conditions
-        Condition cEquals = new Condition("=") ;
-        Condition cNotEquals = new Condition("!=") ;
-        Condition cLessThan = new Condition("<") ;
-        Condition cMoreThan = new Condition(">") ;
-        Condition cLessEqualThan= new Condition("<=");
-        Condition cMoreEqualThan= new Condition(">=");
-        rb.ruleList = new Vector() ;
-
-
-        // Creating rules and closes
-        //Budget
-
-        Rule lowbudget = new Rule(rb, "budget_low" ,
-                clauseArray(
-                    new Clause(user_budget,cLessEqualThan,"300")),
-                new Clause(laptop_range, cEquals, "low"));
-
-
-
-        Rule mediumbudget = new Rule(rb, "budget_medium",
-                clauseArray(
-                        new Clause(user_budget,cLessEqualThan,"1000")  ,
-                        new Clause(user_budget,cMoreThan,"300")),
-                new Clause(laptop_range, cEquals, "medium"));
-
-        Rule highbudget = new Rule(rb, "budget_high",
-                clauseArray(
-                        new Clause(user_budget,cMoreThan,"1000")),
-                new Clause(laptop_range, cEquals, "high"));
-
-
-
-        //desktop_environement rules
-        Rule os_cinamon_rule = new Rule(rb, "cinnamon_rule" ,
-                clauseArray(
-                    new Clause(os,cEquals,"linux") ,
-                    new Clause(laptop_range, cEquals, "low"),
-                    new Clause(ramVar, cLessThan, "4")),
-                new Clause(desktop_environement, cEquals, "cinnamon"));
-
-
-        Rule os_kde_rule = new Rule(rb, "kde_plasma_rule",
-                clauseArray(
-                    new Clause(os,cEquals,"linux") ,
-                    new Clause(laptop_range, cEquals, "medium"),
-                    new Clause(ramVar, cMoreThan, "4")),
-                new Clause(desktop_environement, cEquals, "kde_plasma"));
-
-
-        Rule os_xfce_rule = new Rule(rb, "xfce_rule",
-                clauseArray(new Clause(os,cEquals,"linux") ,
-                    new Clause(laptop_range, cEquals, "low"),
-                    new Clause(ramVar, cLessThan, "4"),
-                    new Clause(software_needs, cEquals, "niche_user_interface")),
-
-                new Clause(desktop_environement,cEquals,"xfce"));
-
-
-
-        //linux distribution rules
-        Rule kubuntu_rule = new Rule(rb, "kubuntu_rule" ,clauseArray(new Clause(desktop_environement,cEquals,"kde_plasma"))
-                , new Clause(linux_distro, cEquals, "Kubuntu"));
-
-
-        Rule linuxMint_rule = new Rule(rb, "linuxMint_rule" ,clauseArray(new Clause(desktop_environement,cEquals,"cinnamon") )
-                 , new Clause(linux_distro, cEquals, "LinuxMint"));
-
-
-        Rule Manjaro_rule = new Rule(rb, "Manjaro_rule" ,
-                clauseArray(
-                        new Clause(desktop_environement,cEquals,"xfce")),
-                new Clause(linux_distro, cEquals, "Manjaro"));
-
-
-
-        //Laptop rules
-        Rule slimbook_rule = new Rule(rb, "slimBook rule" ,clauseArray(new Clause(linux_distro,cEquals,"Kubuntu"))
-                  , new Clause(laptop, cEquals, "KDE_Slimbook"));
-
-        Rule lenovo_rule1 = new Rule(rb, "lenovo rule 1",clauseArray( new Clause(linux_distro,cEquals,"LinuxMint"))
-               , new Clause(laptop, cEquals, "lenovo ThinkPad X240"));
-
-        Rule lenovo_rule2 = new Rule(rb, "lenovo rule 2",clauseArray(new Clause(linux_distro,cEquals,"Manjaro"))
-                  , new Clause(laptop, cEquals, "lenovo ThinkPad X240"));
-
-
-
-        Rule macBookAir_rule = new Rule(rb, "MacBookAir_rule" ,clauseArray(new Clause(os,cEquals,"iOS")  ,
-                new Clause(laptop_range,cEquals,"medium")  ,
-                new Clause(software_needs,cEquals,"finalCutPro")  ,
-                new Clause(ramVar,cLessThan,"8")),
-
-                new Clause(laptop, cEquals, "MacBookAir"));
-
-
-        Rule macBookPro_rule = new Rule(rb, "macBookPro rule",clauseArray(new Clause(os,cEquals,"iOS")  ,
-                new Clause(laptop_range,cEquals,"high")  ,
-                new Clause(software_needs,cEquals,"finalCutPro")  ,
-                new Clause(ramVar,cMoreThan,"8"))
-
-                , new Clause(laptop, cEquals, "MacBookPro"));
-
-
-
-        Rule asus_rog_rule = new Rule(rb, "Asus rog rule",clauseArray(new Clause(os,cEquals,"windows")  ,
-                new Clause(software_needs,cEquals,"gaming")  ,
-                new Clause(laptop_range,cEquals,"high"))
-
-                , new Clause(laptop, cEquals, "Asus_rog"));
-
-
-        Rule microsoft_rule = new Rule(rb, "microsoft surface rule" ,clauseArray(new Clause(os,cEquals,"windows")  ,
-                new Clause(laptop_range,cEquals,"medium"))
-
-                , new Clause(laptop, cEquals, "microsoft_Surface"));
-
-
+        //input
         user_budget.setValue("999");
         os.setValue("iOS");
         software_needs.setValue("finalCutPro");

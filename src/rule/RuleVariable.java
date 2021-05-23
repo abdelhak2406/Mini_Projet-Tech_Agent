@@ -1,4 +1,4 @@
-
+package rule;
 
 import java.util.*;
 import java.awt.* ;
@@ -14,7 +14,7 @@ public class RuleVariable extends Variable {
         clauseRefs = new Vector();
     }
 
-    void setValue(String val) { value = val;
+    public void setValue(String val) { value = val;
         updateClauses(); }
 
 

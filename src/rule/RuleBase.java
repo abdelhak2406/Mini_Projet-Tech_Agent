@@ -1,4 +1,4 @@
-
+package rule;
 
 import java.util.*;
 import java.io.*;
@@ -15,10 +15,39 @@ public class RuleBase {
     Clause clausePtr ;          // working pointer to current clause
     Stack goalClauseStack;      // for goals (cons clauses) and subgoals
 
-    //static TextArea textArea1 ;
+    public String getName() {return name;}
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Vector getRuleList() {
+        return ruleList;
+    }
+
+    public void setRuleList(Vector ruleList) {
+        this.ruleList = ruleList;
+    }
+
+    public Hashtable getVariableList() {
+        return variableList;
+    }
+
+    public void setVariableList(Hashtable variableList) {
+        this.variableList = variableList;
+    }
+
+    public Stack getGoalClauseStack() {
+        return goalClauseStack;
+    }
+
+    public void setGoalClauseStack(Stack goalClauseStack) {
+        this.goalClauseStack = goalClauseStack;
+    }
+//static TextArea textArea1 ;
     //public void setDisplay(TextArea txtArea) { textArea1 = txtArea; }
 
-    RuleBase(String Name) { name = Name; }
+    public RuleBase(String Name) { name = Name; }
     //textArea here
     public static void appendText(String text) {
         System.out.println(text); }

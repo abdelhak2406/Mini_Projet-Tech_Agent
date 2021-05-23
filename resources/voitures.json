@@ -1,0 +1,241 @@
+{
+    "ruleBaseName": "carRules",
+    "variables": [
+        {
+            "name": "vehiculeType",
+            "labels": []
+        },
+        {
+            "name": "numWheels",
+            "labels": []
+        },
+        {
+            "name": "motor",
+            "labels": []
+        },
+        {
+            "name": "vehicule",
+            "labels": []
+        },
+        {
+            "name": "size",
+            "labels": []
+        },
+        {
+            "name": "numDoors",
+            "labels": []
+        }
+    ],
+    "rules": [
+        {
+            "name": "bicycle_rule",
+            "antecedents": [
+                {
+                    "ruleVar": "vehiculeType",
+                    "condition": "=",
+                    "rhs": "cycle"
+                },
+                {
+                    "ruleVar": "numWheels",
+                    "condition": "=",
+                    "rhs": "2"
+                },
+                {
+                    "ruleVar": "motor",
+                    "condition": "=",
+                    "rhs": "no"
+                }
+            ],
+            "consequence": {
+                "ruleVar": "vehicule",
+                "condition": "=",
+                "rhs": "bicycle"
+            }
+        },
+        {
+            "name": "tricycle_rule",
+            "antecedents": [
+                {
+                    "ruleVar": "vehiculeType",
+                    "condition": "=",
+                    "rhs": "cycle"
+                },
+                {
+                    "ruleVar": "numWheels",
+                    "condition": "=",
+                    "rhs": "3"
+                },
+                {
+                    "ruleVar": "motor",
+                    "condition": "=",
+                    "rhs": "no"
+                }
+            ],
+            "consequence": {
+                "ruleVar": "vehicule",
+                "condition": "=",
+                "rhs": "tricycle"
+            }
+        },
+        {
+            "name": "motorcycle_rule",
+            "antecedents": [
+                {
+                    "ruleVar": "vehiculeType",
+                    "condition": "=",
+                    "rhs": "cycle"
+                },
+                {
+                    "ruleVar": "numWheels",
+                    "condition": "=",
+                    "rhs": "2"
+                },
+                {
+                    "ruleVar": "motor",
+                    "condition": "=",
+                    "rhs": "yes"
+                }
+            ],
+            "consequece": {
+                "ruleVar": "vehicule",
+                "condition": "=",
+                "rhs": "motorcycle"
+            }
+        },
+        {
+            "name": "sportCar_rule",
+            "antecedents": [
+                {
+                    "ruleVar": "vehiculeType",
+                    "condition": "=",
+                    "rhs": "automobile"
+                },
+                {
+                    "ruleVar": "size",
+                    "condition": "=",
+                    "rhs": "small"
+                },
+                {
+                    "ruleVar": "numDoors",
+                    "condition": "=",
+                    "rhs": "2"
+                }
+            ],
+            "consequece": {
+                "ruleVar": "vehicule",
+                "condition": "=",
+                "rhs": "sportCar"
+            }
+        },
+        {
+            "name": "sedan_rule",
+            "antecedents": [
+                {
+                    "ruleVar": "vehiculeType",
+                    "condition": "=",
+                    "rhs": "automobile"
+                },
+                {
+                    "ruleVar": "size",
+                    "condition": "=",
+                    "rhs": "medium"
+                },
+                {
+                    "ruleVar": "numDoors",
+                    "condition": "=",
+                    "rhs": "4"
+                }
+            ],
+            "consequece": {
+                "ruleVar": "vehicule",
+                "condition": "=",
+                "rhs": "sedan"
+            }
+        },
+        {
+            "name": "miniVan_rule",
+            "antecedents": [
+                {
+                    "ruleVar": "vehiculeType",
+                    "condition": "=",
+                    "rhs": "automobile"
+                },
+                {
+                    "ruleVar": "size",
+                    "condition": "=",
+                    "rhs": "medium"
+                },
+                {
+                    "ruleVar": "numDoors",
+                    "condition": "=",
+                    "rhs": "3"
+                }
+            ],
+            "consequece": {
+                "ruleVar": "vehicule",
+                "condition": "=",
+                "rhs": "miniVan"
+            }
+        },
+        {
+            "name": "suv_rule",
+            "antecedents": [
+                {
+                    "ruleVar": "vehiculeType",
+                    "condition": "=",
+                    "rhs": "automobile"
+                },
+                {
+                    "ruleVar": "size",
+                    "condition": "=",
+                    "rhs": "large"
+                },
+                {
+                    "ruleVar": "numDoors",
+                    "condition": "=",
+                    "rhs": "4"
+                }
+            ],
+            "consequece": {
+                "ruleVar": "vehicule",
+                "condition": "=",
+                "rhs": "sportUtilityVehicule"
+            }
+        },
+        {
+            "name": "cycle_rule",
+            "antecedents": [
+                {
+                    "ruleVar": "numWheels",
+                    "condition": "<",
+                    "rhs": "4"
+                }
+            ],
+            "consequece": {
+                "ruleVar": "vehiculeType",
+                "condition": "=",
+                "rhs": "cycle"
+            }
+        },
+        {
+            "name": "automobile_rule",
+            "antecedents": [
+                {
+                    "ruleVar": "numWheels",
+                    "condition": "=",
+                    "rhs": "4"
+                },
+                {
+                    "ruleVar": "motor",
+                    "condition": "=",
+                    "rhs": "yes"
+                }
+            ],
+            "consequece": {
+                "ruleVar": "vehiculeType",
+                "condition": "=",
+                "rhs": "automobile"
+            }
+        }
+    ]
+}
