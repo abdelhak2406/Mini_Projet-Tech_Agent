@@ -8,11 +8,7 @@ public class RuleBase {
 
     String name ;
     Hashtable variableList ;    // all variables in the rulebase
-    Clause clauseVarList[];
     Vector ruleList ;           // list of all rules
-    Vector conclusionVarList ;  // queue of variables
-    Rule rulePtr ;              // working pointer to current rule
-    Clause clausePtr ;          // working pointer to current clause
     Stack goalClauseStack;      // for goals (cons clauses) and subgoals
 
     public String getName() {return name;}
@@ -30,7 +26,7 @@ public class RuleBase {
     }
 
     public Hashtable getVariableList() {
-        return variableList;
+        return this.variableList;
     }
 
     public void setVariableList(Hashtable variableList) {
@@ -47,41 +43,72 @@ public class RuleBase {
 //static TextArea textArea1 ;
     //public void setDisplay(TextArea txtArea) { textArea1 = txtArea; }
 
-    public RuleBase(String Name) { name = Name; }
-    //textArea here
+    public RuleBase(String Name) { this.name = Name; }
+
     public static void appendText(String text) {
         System.out.println(text); }
 
     // for trace purposes - display all variables and their value
-    public void displayVariables() {
-
+    public String displayVariables() {
+        String strVariable = "";
         Enumeration enum87 = variableList.elements() ;
         while(enum87.hasMoreElements()) {
             RuleVariable temp = (RuleVariable)enum87.nextElement() ;
+            strVariable = strVariable.concat("\n" + temp.name + " value = " + temp.value);
             System.out.println("\n" + temp.name + " value = " + temp.value) ;
         }
+        return strVariable;
+    }
+    public String displayVarValue(String varName){
+        /*
+            Display the value of a specific variable
+         */
+        RuleVariable temp = (RuleVariable)  variableList.get(varName) ;
+
+        String strVariable = "";//In order to print nothing!
+        if (temp.value != null){
+            strVariable = strVariable.concat(temp.value);
+        }
+        else {
+            strVariable = strVariable.concat("Nothing to sell :/");
+        }
+        System.out.println("----------------\n\n\n--------------");
+        System.out.println("value of "+varName+" = "+temp.value);
+        return strVariable;
     }
 
     // for trace purposes - display all rules in text format
-    public void displayRules() {
+    public String displayRules() {
+        String rulesDisplayString ="";
+        //need to return a string to print it in the Gui
         System.out.println("\n" + name + " Rule Base: " + "\n");
+        rulesDisplayString = rulesDisplayString.concat(name + " Rule Base: " + "\n\n") ;
         Enumeration enum87 = ruleList.elements() ;
         while(enum87.hasMoreElements()) {
             Rule temp = (Rule)enum87.nextElement() ;
-            temp.display() ;
+            String tmp = temp.display() ;
+            rulesDisplayString = rulesDisplayString.concat(tmp);
+
         }
+        return  rulesDisplayString;
     }
 
     // for trace purposes - display all rules in the conflict set
-    public void displayConflictSet(Vector ruleSet) {
+    public String displayConflictSet(Vector ruleSet) {
+        /*
+            we just loop through the ruleSet and print all the rules
+         */
         //textArea1.appendText("\n" + " -- Rules in conflict set:\n");
+        String strConflictSet= "";
         System.out.println("\n" + " -- Rules in conflict set:\n");
+        strConflictSet = strConflictSet.concat("-- Rules in conflict set:\n");
         Enumeration enum87 = ruleSet.elements() ;
         while(enum87.hasMoreElements()) {
             Rule temp = (Rule)enum87.nextElement() ;
-            //textArea1.appendText(temp.name + "(" + temp.numAntecedents()+ "), " ) ;
             System.out.println(temp.name + "(" + temp.numAntecedents()+ "), " ) ;
+            strConflictSet = strConflictSet.concat(temp.name + "(" + temp.numAntecedents()+ "), " );
         }
+        return strConflictSet;
     }
 
 
@@ -142,9 +169,14 @@ public class RuleBase {
         }
     }
 
-    // used for forward chaining only
-    // determine which rules can fire, return a Vector
     public Vector match(boolean test) {
+        /*
+             used for forward chaining only
+             determine which rules can fire,
+                 return a Vector of rules that can fire
+
+             TODO:find what test means
+         */
         Vector matchList = new Vector() ;
         Enumeration enum87 = ruleList.elements() ;
         while (enum87.hasMoreElements()) {
@@ -152,16 +184,28 @@ public class RuleBase {
             if (test) testRule.check() ; // test the rule antecedents
             if (testRule.truth == null) continue ;
             // fire the rule only once for now
-            if ((testRule.truth.booleanValue() == true) &&
-                    (testRule.fired == false)) matchList.addElement(testRule) ;
+            if ( (testRule.truth.booleanValue() == true ) &&
+                    (testRule.fired == false) ){
+                matchList.addElement(testRule) ;
+            }
         }
-        displayConflictSet(matchList) ;
+        String ruleSet = displayConflictSet(matchList) ;
         return matchList ;
     }
 
-    // used for forward chaining only
-    // select a rule to fire based on specificity
     public Rule selectRule(Vector ruleSet) {
+        /*
+            * ruleSet: vector of the ConflictSet
+
+            Used for forward chaining only
+
+            This method decides which rule to fire
+            select a rule to fire based on the number of antecedent clauses
+            It means that, the Rule that have more antecedents will be fired
+            * return the fired  rule
+
+          */
+
         Enumeration enum87 = ruleSet.elements() ;
         long numClauses ;
         Rule nextRule ;

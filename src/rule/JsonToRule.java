@@ -6,8 +6,6 @@ import java.util.*;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.*;
-import rule.Condition;
-import rule.*;
 
 public class JsonToRule {
     //Conditions
@@ -103,14 +101,14 @@ public class JsonToRule {
             String ruleName = (String) rule.get("name");
 
             JSONArray antecedents = (JSONArray) rule.get("antecedents");
-            System.out.println("ruleName:: "+ruleName);
             Clause[] clauseArray= new Clause[antecedents.size()];
-            //adding antecedent clauses
+
+            //adding antecedent c/Slauses
             for (int i = 0; i < antecedents.size(); i++) {
                 JSONObject   clausei = (JSONObject) antecedents.get(i);
-                //TODO:delete temp after debug
+
                 String temp= (String) clausei.get("ruleVar");
-                System.out.println("ruleName= "+ruleName+"\ntemp = "+temp);
+                // System.out.println("ruleName= "+ruleName+"\ntemp = "+temp);
 
                 RuleVariable var =getRuleVarObject(clausei);
                 String condStr = (String) clausei.get("condition") ;
@@ -169,89 +167,5 @@ public class JsonToRule {
 
     }
 
-  /*  public static void main(String[] args) throws Exception
-    {
-
-
-
-
-//Dici-----------------------------------------------------------------
-*//*
-        //---------------------
-        Map variableObjects = new HashMap<String,Object>();
-        JSONArray variables = (JSONArray) jo.get("variables");
-//        System.out.println("la taille du tabl "+variables.size());
-
-        variables.forEach(entry -> {
-            JSONObject variable = (JSONObject) entry;
-            String varName = (String) variable.get("name");
-            System.out.println(variable.get("name"));
-            //TODO:ici il faut executer la methode pour ajouter l'element
-
-            RuleVariable ruleVari = new RuleVariable(varName) ;
-            variableObjects.put(varName,ruleVari);
-            //rb.variableList.put(os.name,os) ;
-
-            JSONArray label = (JSONArray) variable.get("labels");
-            if(label.size() > 0) {
-                //if not necessary forEach takes care of himself
-                String labelValues = new String("");
-                for (int i = 0; i < label.size(); i++) {
-                    String valueStr = (String) label.get(i);
-                    labelValues = labelValues.concat(" " + valueStr);
-                }//we add the labels now
-                ruleVari.setLabels(labelValues);
-            }
-
-            });
-*//*
-//-------------jusque la c'est pour les variable'------------------------------
-
-        JSONArray rules = (JSONArray) jo.get("rules");
-//        System.out.println("la taille du tabl "+variables.size());
-
-        rules.forEach(entry -> {
-            JSONObject rule = (JSONObject) entry;
-            String ruleName = (String) rule.get("name");
-            ArrayList<Clause> clauses= new ArrayList<>();
-
-
-            JSONArray antecedents = (JSONArray) rule.get("antecedents");
-
-            Clause[] array= new Clause[antecedents.size()];
-            //adding antecedent clauses
-            for (int i = 0; i < antecedents.size(); i++) {
-                JSONObject   clausei = (JSONObject) antecedents.get(i);
-
-                String varName =  (String) clausei.get("ruleVar");
-
-                RuleVariable  var = (RuleVariable) variableObjects.get(varName) ;
-                String condStr = (String) clausei.get("condition") ;
-                Condition cond = getCondition(condStr) ;
-                String rhs = (String)  clausei.get("rhs");
-
-                Clause clauseTemp = new Clause(var,cond,rhs);
-
-                array[i] = clauseTemp;
-                System.out.println("varname = "+varName);
-                //TODO: create a function to get what conditioo run
-            }
-            JSONObject consequence =(JSONObject) rule.get("consequence");
-            String ruleVarConsequence = (String) consequence.get("ruleVar");
-            RuleVariable  varCons = (RuleVariable) variableObjects.get(ruleVarConsequence) ;
-            String condStr = (String) clausei.get("condition") ;
-            Condition condCons = getCondition(condStr) ;
-            String rhsCons = (String)  clausei.get("rhs");
-
-            Clause clauseCons= new Clause(carCons,condCons,rhsCons);
-
-            Rule rulei = new Rule(rb, ruleName,array,clauseCons );
-                    //TODO:ici il faut executer la methode pour ajouter l'element
-            ruleObjects.put(ruleName,rulei);
-
-        });
-
-    }
-*/
 
 }

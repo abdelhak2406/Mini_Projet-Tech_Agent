@@ -43,13 +43,19 @@ public class Rule {
     }
 
 
-    // used by forward chaining only !
-    Boolean check() {  // if antecedent is true and rule has not fired
+    Boolean check() {
         /*
-            check if all the antecedents are correct so we can say that the
-            rule is true!!!
+            used by forward chaining only !
+
+            if antecedent is true and rule has not fired
+                check if all the antecedents are correct so we can say that the
+                rule is true!!!
+
+             Keep in mind that, every time a variable is set (we add new knowledge BF)
+             the value of each Clause that contains this variablee is updated
+             (see Rulevariable.SetValue() )
+
          */
-        //RuleBase.appendText("\nTesting rule " + name ) ;
         for (int i=0 ; i < antecedents.length ; i++ ) {
             if (antecedents[i].truth == null) return null ;
             if (antecedents[i].truth == true) {
@@ -69,14 +75,22 @@ public class Rule {
     //  those clauses
 
     void fire() {
+        /*
+           TODO: i know we need to update the method appendText
+                i just dont know how @youcefAz
+           * fires the rule
+                        */
         RuleBase.appendText("\nFiring rule " + name ) ;
         truth = true ;
         fired = true ;
         // set the variable value and update clauses
         consequent.lhs.setValue(consequent.rhs) ;
+
         // now retest any rules whose clauses just changed
         checkRules(consequent.lhs.clauseRefs) ;
     }
+
+
 
     // determine is a rule is true or false
     // by recursively trying to prove its antecedent clauses are true
@@ -105,20 +119,36 @@ public class Rule {
 
     // display the rule in text format
     @SuppressWarnings("deprecation")
-    void display() {
+    String display() {
+        String displayStr = "";
         System.out.println(name +": IF ");
+        displayStr = displayStr.concat( name + ":\n\nIF (\n");
         for(int i=0 ; i < antecedents.length ; i++) {
             Clause nextClause = antecedents[i] ;
 
             System.out.println(nextClause.lhs.name +
                     nextClause.cond.asString() +
-                    nextClause.rhs + " ") ;
+                    nextClause.rhs + "  )") ;
+            displayStr = displayStr.concat("   ( "+nextClause.lhs.name +
+                    nextClause.cond.asString() +
+                    nextClause.rhs+ " )");
             //TODO: find out why this part is never executed.
-            if ((i+1) < antecedents.length) System.out.println(" AND ") ;
+            if ((i+1) < antecedents.length) {
+                System.out.println(" AND\n") ;
+                displayStr  = displayStr.concat(" AND\n");
+            }
         }
-        System.out.println("\n     THEN ") ;
+        System.out.println("\tTHEN ") ;
+        displayStr = displayStr.concat("\n   )\t THEN ");
         System.out.println(consequent.lhs.name +
                 consequent.cond.asString() +
                 consequent.rhs + "\n") ;
+        displayStr = displayStr.concat(consequent.lhs.name +
+                consequent.cond.asString() +
+                consequent.rhs + "\n\n");
+
+        return displayStr;
+
     }
+
 }

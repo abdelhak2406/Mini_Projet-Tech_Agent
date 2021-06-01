@@ -34,6 +34,12 @@ public class Clause {
     void addRuleRef(Rule ref) { ruleRefs.addElement(ref) ; }
 
     Boolean check() {
+        /*
+            check if a clause is correct
+            and update the value of truth
+            is executed every time a new value is set
+            to a variable
+         */
         if (consequent) return truth= null ;//doesn't make sence to check the value of the variable if it's a consequence
 
         if (lhs.value == null) {
@@ -63,13 +69,9 @@ public class Clause {
             }
             return truth ;
         }
-        else {// not an integer, so we just check if it's eqal or not why > et < TODO: why this?
+        else {
             switch(cond.index) {
                 case 1: truth = (lhs.value.equals(rhs)) ;
-                    break ;
-                case 2: truth = (lhs.value.compareTo(rhs) > 0) ;
-                    break ;
-                case 3: truth = (lhs.value.compareTo(rhs) < 0) ;
                     break ;
                 case 4: truth = (lhs.value.compareTo(rhs) != 0) ;
                     break ;

@@ -14,7 +14,11 @@ public class RuleVariable extends Variable {
         clauseRefs = new Vector();
     }
 
-    public void setValue(String val) { value = val;
+    public void setValue(String val) {
+        /*
+            when we set the value we also update the clause's truth value
+         */
+        this.value = val;
         updateClauses(); }
 
 
