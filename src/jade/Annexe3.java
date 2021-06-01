@@ -22,17 +22,25 @@ public class Annexe3 extends Agent {
             public void action(){
                 ACLMessage msg = receive(MessageTemplate.MatchPerformative(ACLMessage.INFORM));
                 if (msg != null) {
+                    //We will make an if here li tdifferenci between when we send the data
+                    //Or when we choose the annexe pour le vol
                     try {
+                        System.out.println("printing in AN3 : ");
                         obj=(Object[]) msg.getContentObject();
+                        for (int i = 0; i < obj.length; i++) {
+                            System.out.println(obj[i]);
+                        }
+
                         ACLMessage reply = msg.createReply();
                         //systeme experts comes here
-                        //reply.setContent(data);
+                        reply.setContent("AN3 IS RESPONDING TO AGENT_CENTRAL");
                         myAgent.send(reply);
 
                     }catch (Exception e){
                         System.out.println(e);
                     }
-                    doDelete();
+                    //Do delete only when we finish everything
+                    //doDelete();
                 }
                 else {
                     block();
