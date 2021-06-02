@@ -20,27 +20,38 @@ public class Annexe3 extends Agent {
 
         addBehaviour(new CyclicBehaviour(this) {
             public void action(){
-                ACLMessage msg = receive(MessageTemplate.MatchPerformative(ACLMessage.INFORM));
+                ACLMessage msg = receive();
                 if (msg != null) {
-                    //We will make an if here li tdifferenci between when we send the data
-                    //Or when we choose the annexe pour le vol
-                    try {
-                        System.out.println("printing in AN3 : ");
-                        obj=(Object[]) msg.getContentObject();
-                        for (int i = 0; i < obj.length; i++) {
-                            System.out.println(obj[i]);
+                    if(msg.getPerformative()==ACLMessage.INFORM){
+                        //We will make an if here li tdifferenci between when we send the data
+                        //Or when we choose the annexe pour le vol
+                        try {
+                            System.out.println("printing in AN1 : ");
+                            obj=(Object[]) msg.getContentObject();
+                            for (int i = 0; i < obj.length; i++) {
+                                System.out.println(obj[i]);
+                            }
+
+                            ACLMessage reply = msg.createReply();
+                            //systeme experts comes here probably
+                            reply.setContent("AN1 IS RESPONDING TO AGENT_CENTRAL");
+                            myAgent.send(reply);
+
+                        }catch (Exception e){
+                            System.out.println(e);
                         }
 
-                        ACLMessage reply = msg.createReply();
-                        //systeme experts comes here
-                        reply.setContent("AN3 IS RESPONDING TO AGENT_CENTRAL");
-                        myAgent.send(reply);
-
-                    }catch (Exception e){
-                        System.out.println(e);
                     }
-                    //Do delete only when we finish everything
-                    //doDelete();
+
+                    else if(msg.getPerformative()==ACLMessage.CONFIRM){
+                        //we enter here to confirm l'achat des billets
+                        System.out.println("AN3 CONFIRMATION");
+                        ACLMessage reply=msg.createReply();
+                        reply.setContent("WELCOME ABROAD :D");
+                        myAgent.send(reply);
+                        //this deletes the agent
+                        doDelete();
+                    }
                 }
                 else {
                     block();

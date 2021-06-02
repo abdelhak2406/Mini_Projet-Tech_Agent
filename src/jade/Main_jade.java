@@ -2,6 +2,7 @@ package jade;
 
 public class Main_jade {
     public static void main(String[] args) {
+        //probably gonna change it, we dont need the fuckin jade GUI
         String[] jadearg= new String[2];
         StringBuffer SbAgent=new StringBuffer();
         SbAgent.append("AC:jade.Agent_central(arguments,META,drias);");

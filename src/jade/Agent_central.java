@@ -43,27 +43,37 @@ public class Agent_central extends Agent {
         addBehaviour(new CyclicBehaviour(this) {
             public void action(){
                 //we wait for annexes to return their result
-                ACLMessage msg = receive(MessageTemplate.MatchPerformative(ACLMessage.INFORM));
+                ACLMessage msg = receive();
                 if (msg != null) {
-                    //we print the data given by les annexes, treat it and
-                    //then resend another message to the annex that the user has chosen
+                    if (msg.getPerformative()==ACLMessage.INFORM){
+                        //we print the data given by les annexes, treat it and
+                        //then resend another message to the annex that the user has chosen
 
-                    try {
-                        System.out.println("printing in AC : ");
+                        try {
+                            System.out.println("printing in AC : ");
+                            simpleObj=msg.getContent();
+                            System.out.println(simpleObj);
+
+                            //new message to the annexe we chose, probably better if its a function
+                            ACLMessage msg1 = new ACLMessage(ACLMessage.CONFIRM);
+                            msg1.setContent(simpleObj.toString());
+                            //send to selected annexe
+                            msg1.addReceiver(new AID("AN2", AID.ISLOCALNAME));
+                            send(msg1);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        //Do delete stops the cyclic behaviour, kills the agent.
+                        //doDelete();
+                    }
+
+                    else {
+                        //receive message from selected annexe, that l'achat is accepted
                         simpleObj=msg.getContent();
                         System.out.println(simpleObj);
 
-                        //new message to the annexe we chose, probably better if its a function
-                        //doesnt work yet :(
-                        ACLMessage msg1 = new ACLMessage(ACLMessage.INFORM);
-                        msg1.setContent(simpleObj.toString());
-                        //msg1.addReceiver(new AID("AN11", AID.ISLOCALNAME));
-                        //send(msg1);
-                    } catch (Exception e) {
-                        e.printStackTrace();
                     }
-                    //Do delete stops the cyclic behaviour, kills the agent.
-                    //doDelete();
+
                 }
                 else {
                     //this blocks the agent until it gets a message
