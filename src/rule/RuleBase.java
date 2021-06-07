@@ -1,8 +1,6 @@
 package rule;
 
 import java.util.*;
-import java.io.*;
-import java.awt.* ;
 
 public class RuleBase {
 
@@ -48,8 +46,10 @@ public class RuleBase {
     public static void appendText(String text) {
         System.out.println(text); }
 
-    // for trace purposes - display all variables and their value
     public String displayVariables() {
+        /*
+            for trace purposes - display all variables and their value
+         */
         String strVariable = "";
         Enumeration enum87 = variableList.elements() ;
         while(enum87.hasMoreElements()) {
@@ -59,6 +59,7 @@ public class RuleBase {
         }
         return strVariable;
     }
+
     public String displayVarValue(String varName){
         /*
             Display the value of a specific variable
@@ -106,15 +107,17 @@ public class RuleBase {
         while(enum87.hasMoreElements()) {
             Rule temp = (Rule)enum87.nextElement() ;
             System.out.println(temp.name + "(" + temp.numAntecedents()+ "), " ) ;
-            strConflictSet = strConflictSet.concat(temp.name + "(" + temp.numAntecedents()+ "), " );
+            strConflictSet = strConflictSet.concat(temp.name + "(" + temp.numAntecedents()+ "), "+"\n" );
         }
         return strConflictSet;
     }
 
 
-    // reset the rule base for another round of inferencing
-    // by setting all variable values to null
     public void reset() {
+            /*
+                 reset the rule base for another round of inferencing
+                 by setting all variable values to null
+             */
         System.out.println("\n --- Setting all " + name + " variables to null");
         Enumeration enum87 = variableList.elements() ;
         while(enum87.hasMoreElements()) {
@@ -170,10 +173,14 @@ public class RuleBase {
     }
 
     public Vector match(boolean test) {
+
         /*
              used for forward chaining only
              determine which rules can fire,
                  return a Vector of rules that can fire
+
+            * test : true : means we will check the rul's antecedents and determine if we can use it or not (update truth in Rule )
+            * test : false : we don't need to update the truth value since we did it already with calling match(true)
 
              TODO:find what test means
          */
@@ -181,7 +188,7 @@ public class RuleBase {
         Enumeration enum87 = ruleList.elements() ;
         while (enum87.hasMoreElements()) {
             Rule testRule = (Rule)enum87.nextElement() ;
-            if (test) testRule.check() ; // test the rule antecedents
+            if (test) testRule.check() ; // test if all the rule's antecedents are true
             if (testRule.truth == null) continue ;
             // fire the rule only once for now
             if ( (testRule.truth.booleanValue() == true ) &&
@@ -222,23 +229,39 @@ public class RuleBase {
         return bestRule ;
     }
 
-    public void forwardChain() {
+    public HashMap forwardChain() {
+        /*
+            do the forwarrd Chain and output a hashmap
+            * {"fired":[list of fired list(by order)],"conflictSet":[listOf conflict sets (by order) ] }
+         */
+        // hashmap aura 2 true: conflict set et fired rule
+        //{"fired":[list of fired list(by order)],"conflictSet":[listOf conflict sets (by order) ] }
+        HashMap<String, ArrayList> firedAndConflict = new HashMap<>();
+        firedAndConflict.put("fired",new ArrayList<Rule>()) ;
+        firedAndConflict.put("conflictSet",new ArrayList<Vector>()) ;
+
+
+
         Vector conflictRuleSet = new Vector() ;
 
         // first test all rules, based on initial data
         conflictRuleSet = match(true); // see which rules can fire
 
         while(conflictRuleSet.size() > 0) {
-
+            firedAndConflict.get("conflictSet").add(conflictRuleSet);
             Rule selected = selectRule(conflictRuleSet); // select the "best" rule
             selected.fire() ; // fire the rule
             // do the consequent action/assignment
             // update all clauses and rules
 
+
+            //add fired rule to the list of fired rule
+            firedAndConflict.get("fired").add(selected);
+
             conflictRuleSet = match(false); // see which rules can fire
 
-            // displayVariables("Forward Chaining") ; // display variable bindings
         }
+        return firedAndConflict;
     }
 
 

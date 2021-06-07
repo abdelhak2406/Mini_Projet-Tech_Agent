@@ -12,9 +12,9 @@
   <items>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="514.0" prefWidth="112.0">
          <children>
-            <Button layoutX="-3.0" layoutY="165.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="118.0" text="Voiture" />
+            <Button layoutX="-3.0" layoutY="165.0" mnemonicParsing="false" onAction="#switchToVoitureWin" prefHeight="37.0" prefWidth="118.0" text="Voiture" />
             <Button layoutY="59.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="118.0" text="Achat Laptop" />
-            <Button layoutX="-3.0" layoutY="278.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="118.0" text="Gestion Aeroport" />
+            <Button layoutX="-3.0" layoutY="278.0" mnemonicParsing="false" onAction="#switchToAeroportWin" prefHeight="37.0" prefWidth="118.0" text="Gestion Aeroport" />
          </children>
       </AnchorPane>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="547.0" prefWidth="364.0">

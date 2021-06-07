@@ -1,24 +1,27 @@
 package gui;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+import org.jetbrains.annotations.NotNull;
 import rule.JsonToRule;
+import rule.Rule;
 import rule.RuleBase;
 import rule.RuleVariable;
 
 import java.net.URL;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.*;
 
 import static gui.Utilities.*;
 
 //TODO: find a way to get the string that contains the conflictSet
-//TODO: add blanc choise to the comboBox
 
 public class LaptopController implements Initializable {
     @FXML
@@ -30,6 +33,13 @@ public class LaptopController implements Initializable {
     @FXML
     TextArea txt_display_conflictSet,txt_display_laptop,
                 txt_display_rules;
+
+    private Stage stage;
+    private  Scene scene;
+    private Parent root;
+
+
+
 
    @FXML
     public void startForwardChain(ActionEvent e) throws Exception {
@@ -94,16 +104,32 @@ public class LaptopController implements Initializable {
        //display the rules in the rule  textArea
        txt_display_rules.setText(strRules);
 
-       //TODO: find a way to get the strings that contain the conflict set ect
-       rb.forwardChain();
+       HashMap<String, ArrayList> outputs = rb.forwardChain();
+       ArrayList<Rule> firedRules = outputs.get("fired");
+       ArrayList<Vector> conflictSets = outputs.get("conflictSet");
+       int lim =firedRules.size();
+
+
+       for(int i=0; i<lim;i++){
+           Rule firedTmp = firedRules.get(i);
+           Vector tmpConf = conflictSets.get(i);
+           System.out.println("conflict set "+i+"\n\n------------*------------");
+           String cnf = rb.displayConflictSet(tmpConf);
+           txt_display_conflictSet.appendText(cnf+"fired: --> "+firedTmp.getName()+"\n\n");
+
+           System.out.println("fired "+i+" "+firedTmp.getName());
+
+       }
+
+
        String strListVars = rb.displayVariables();
        txt_display_laptop.setText(rb.displayVarValue("laptop"));
-    }
+   }
 
     public void reset(ActionEvent e) {
-       //TODO: find some use to this
-
+       //TODO: find some use to this+
     }
+
     public void addBlancChoiceToCombos(){
         addBlancChoice(cbx_softwareNeeds);
         addBlancChoice(cbx_desktopEnvirnment);
@@ -114,6 +140,7 @@ public class LaptopController implements Initializable {
 
 
     public  void initSoftwareCombo(){
+        //WARNING: if you change this you need to change the values in Utilities.displaydToJsonName
         cbx_softwareNeeds.getItems().add("User Friendly");
         cbx_softwareNeeds.getItems().add("Final Cut Pro");
         cbx_softwareNeeds.getItems().add("Gaming");
@@ -121,27 +148,30 @@ public class LaptopController implements Initializable {
     }
 
     public  void initDesktopCombo(){
+        //!WARNING: if you change this you need to change the values in Utilities.displaydToJsonName
         cbx_desktopEnvirnment.getItems().add("Kde Plasma");
         cbx_desktopEnvirnment.getItems().add("XFCE");
         cbx_desktopEnvirnment.getItems().add("Cinamone");
         }
 
     public  void initLinuxCombo(){
+        //!WARNING: if you change this you need to change the values in Utilities.displaydToJsonName
         cbx_linuxDistro.getItems().add("Manjaro");
         cbx_linuxDistro.getItems().add("Linux Mint");
         cbx_linuxDistro.getItems().add("Kubuntu");
     }
 
     public  void initOsCombo(){
-       /*
-       si modifier alors modifier Utilities.displaydToJsonName
-        */
+        //WARNING: if you change this you need to change the values in Utilities.displaydToJsonName
         cbx_os.getItems().add("GNU/Linux");
         cbx_os.getItems().add("Windows");
         cbx_os.getItems().add("iOs");
     }
 
     void disableUserInput(){
+       /*
+            disable the possibility to write in the textArea
+        */
         txt_display_laptop.editableProperty().setValue(false);
         txt_display_conflictSet.editableProperty().setValue(false);
         txt_display_rules.editableProperty().setValue(false);
@@ -166,10 +196,7 @@ public class LaptopController implements Initializable {
     }
 
 
-    public  Boolean isFilled(TextField input){
-       //works !
-        return  !(input.getText() == null || input.getText().trim().isEmpty()) ;
-    }
+
 
 
     public void getInputs(){
@@ -183,6 +210,19 @@ public class LaptopController implements Initializable {
                 ,cbx_desktopEnvirnment,cbx_linuxDistro,
                 cbx_softwareNeeds;
 */
+    }
+
+    public void switchToVoitureWin (ActionEvent event) throws Exception{
+        Utilities u = new Utilities();
+        u.switchWindow(event,"Voiture.fxml",root,stage,scene );
+   }
+
+    public void switchToAeroportWin(ActionEvent event) throws Exception{
+        Utilities u = new Utilities();
+        u.switchWindow(event,"Aeroport.fxml",root,stage,scene );
+
+
+
     }
 
 

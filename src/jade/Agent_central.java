@@ -9,6 +9,9 @@ import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 
 import java.io.IOException;
+/*
+anexe = compagnie
+*/
 
 public class Agent_central extends Agent {
     Object[] obj=null;      //to receive serialisable Objects
@@ -54,7 +57,7 @@ public class Agent_central extends Agent {
                             simpleObj=msg.getContent();
                             System.out.println(simpleObj);
 
-                            //new message to the annexe we chose, probably better if its a function
+                            //new message to the annexe we choose, probably better if its a function
                             ACLMessage msg1 = new ACLMessage(ACLMessage.CONFIRM);
                             msg1.setContent(simpleObj.toString());
                             //send to selected annexe

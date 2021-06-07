@@ -42,6 +42,9 @@ public class Rule {
         }
     }
 
+    public String getName() {
+        return name;
+    }
 
     Boolean check() {
         /*
@@ -51,7 +54,7 @@ public class Rule {
                 check if all the antecedents are correct so we can say that the
                 rule is true!!!
 
-             Keep in mind that, every time a variable is set (we add new knowledge BF)
+             Keep in mind that, every time a variable is set (we add new knowledge (BF) )
              the value of each Clause that contains this variablee is updated
              (see Rulevariable.SetValue() )
 
