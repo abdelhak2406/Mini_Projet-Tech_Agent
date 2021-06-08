@@ -10,7 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import org.jetbrains.annotations.NotNull;
+//import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 
@@ -111,7 +111,7 @@ public class Utilities {
 
    }
 
-   public static Boolean isFilled(@NotNull TextField input){
+   public static Boolean isFilled(TextField input){
       //works !
       return  !(input.getText() == null || input.getText().trim().isEmpty()) ;
    }
