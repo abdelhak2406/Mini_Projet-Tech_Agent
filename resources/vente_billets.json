@@ -1,0 +1,132 @@
+{
+  "ruleBaseName": "vente_billets_1",
+  "variables": [
+    {
+      "name": "nb_billets",
+      "labels": []
+    },
+    {
+      "name": "depart",
+      "labels": [
+        "Algerie",
+        "France"
+      ]
+    },
+    {
+      "name": "Destination",
+      "labels": [
+        "France",
+        "USA"
+      ]
+    },
+    {
+      "name": "nb_age12",
+      "labels": []
+    },
+    {
+      "name": "nb_age10",
+      "labels": []
+    },
+    {
+      "name": "nb_age75",
+      "labels": []
+    },
+    {
+      "name": "prix",
+      "labels": []
+    },
+    {
+      "name": "escale",
+      "labels": []
+    },
+    {
+      "name": "escaleR",
+      "labels": []
+    },
+    {
+      "name": "reduction_escale",
+      "labels": []
+    },
+    {
+      "name": "bonus_estivale",
+      "labels": []
+    },
+    {
+      "name": "proposer_vol",
+      "labels": []
+    },
+    {
+      "name": "bonus",
+      "labels": []
+    },
+    {
+      "name": "reduction_nbbillet",
+      "labels": []
+    },
+    {
+      "name": "reduction_petit",
+      "labels": []
+    },
+    {
+      "name": "reduction_enfants",
+      "labels": []
+    },
+    {
+      "name": "reduction_vieux",
+      "labels": []
+    }
+  ],
+  "rules": [
+    {
+      "name": "proposer_vol_rule",
+      "antecedents": [
+        {
+          "ruleVar": "depart",
+          "condition": "=",
+          "rhs": "algerie"
+        },
+        {
+          "ruleVar": "destination",
+          "condition": "=",
+          "rhs": "france"
+        }
+      ],
+      "consequence": {
+        "ruleVar": "proposer_vol",
+        "condition": "=",
+        "rhs": "true"
+      }
+    },
+    {
+      "name": "escale_rule",
+      "antecedents": [
+        {
+          "ruleVar": "escale",
+          "condition": "=",
+          "rhs": "true"
+        }
+      ],
+      "consequence": {
+        "ruleVar": "reduction_escale",
+        "condition": "=",
+        "rhs": "true"
+      }
+    },
+    {
+      "name": "",
+      "antecedents": [
+        {
+          "ruleVar": "",
+          "condition": "",
+          "rhs": ""
+        }
+      ],
+      "consequece": {
+        "ruleVar": "",
+        "condition": "",
+        "rhs": ""
+      }
+    }
+  ]
+}
+
