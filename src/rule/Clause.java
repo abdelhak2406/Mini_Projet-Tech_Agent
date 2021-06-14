@@ -76,7 +76,7 @@ public class Clause {
                 case 4: truth = (lhs.value.compareTo(rhs) != 0) ;
                     break ;
             }
-
+            System.out.println(toString()+", truth :"+truth);
             return truth ;
         }
 

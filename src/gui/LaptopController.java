@@ -165,7 +165,7 @@ public class LaptopController implements Initializable {
         //WARNING: if you change this you need to change the values in Utilities.displaydToJsonName
         cbx_os.getItems().add("GNU/Linux");
         cbx_os.getItems().add("Windows");
-        cbx_os.getItems().add("iOs");
+        cbx_os.getItems().add("iOS");
     }
 
     void disableUserInput(){

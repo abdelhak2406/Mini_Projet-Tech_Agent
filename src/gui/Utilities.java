@@ -88,8 +88,8 @@ public class Utilities {
       if (displayed.equals("Windows")){
          return "windows";
       }
-      if (displayed.equals("iOs")){
-         return "ios";
+      if (displayed.equals("iOS")){
+         return "iOS";
       }
       return null;
    }
