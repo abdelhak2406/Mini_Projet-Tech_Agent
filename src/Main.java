@@ -1,4 +1,3 @@
-//TODO:add a switch between the car rules and our own rules
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

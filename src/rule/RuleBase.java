@@ -5,8 +5,8 @@ import java.util.*;
 public class RuleBase {
 
     String name ;
-    Hashtable variableList ;    // all variables in the rulebase
-    Vector ruleList ;           // list of all rules
+    Hashtable variableList ;    // all variables in the rulebase, it's structured like this:{"var_name":RuleVariablbe Object}
+    Vector ruleList ;           // list of all rules[contains RULE objects]
     Stack goalClauseStack;      // for goals (cons clauses) and subgoals
 
     public String getName() {return name;}
@@ -27,6 +27,10 @@ public class RuleBase {
         return this.variableList;
     }
 
+    public RuleVariable getVariable(String varName) {
+        return (RuleVariable)variableList.get(varName);
+    }
+
     public void setVariableList(Hashtable variableList) {
         this.variableList = variableList;
     }
@@ -38,17 +42,15 @@ public class RuleBase {
     public void setGoalClauseStack(Stack goalClauseStack) {
         this.goalClauseStack = goalClauseStack;
     }
-//static TextArea textArea1 ;
-    //public void setDisplay(TextArea txtArea) { textArea1 = txtArea; }
+
 
     public RuleBase(String Name) { this.name = Name; }
 
-    public static void appendText(String text) {
-        System.out.println(text); }
 
     public String displayVariables() {
         /*
             for trace purposes - display all variables and their value
+            * return the string that contains all the vars and their values
          */
         String strVariable = "";
         Enumeration enum87 = variableList.elements() ;
@@ -78,8 +80,12 @@ public class RuleBase {
         return strVariable;
     }
 
-    // for trace purposes - display all rules in text format
+
     public String displayRules() {
+        /*
+            for trace purposes - display all rules in text format
+            return the string containing all the rules
+         */
         String rulesDisplayString ="";
         //need to return a string to print it in the Gui
         System.out.println("\n" + name + " Rule Base: " + "\n");
@@ -126,51 +132,7 @@ public class RuleBase {
         }
     }
 
-    // for all consequent clauses which refer to this goalVar
-    // try to find goalVar value via a rule being true
-    //     if rule is true then pop, assign value, re-eval rule
-    //     if rule is false then pop, continue
-    //     if rule is null then we couldnt find a value (same as false?)
-    //
-    public void backwardChain(String goalVarName)
-    {
 
-        RuleVariable goalVar = (RuleVariable)variableList.get(goalVarName);
-        Enumeration goalClauses = goalVar.clauseRefs.elements() ;
-
-        while (goalClauses.hasMoreElements()) {
-            Clause goalClause = (Clause)goalClauses.nextElement() ;
-            if (goalClause.consequent.booleanValue() == false) continue ;
-
-            goalClauseStack.push(goalClause) ;
-
-            Rule goalRule = goalClause.getRule();
-            Boolean ruleTruth = goalRule.backChain() ; // find rule truth value
-            if (ruleTruth == null) {
-                System.out.println("\nRule " + goalRule.name +
-                        " is null, can't determine truth value.");
-            } else if (ruleTruth.booleanValue() == true) {
-                // rule is OK, assign consequent value to variable
-                goalVar.setValue(goalClause.rhs) ;
-                goalVar.setRuleName(goalRule.name) ;
-                goalClauseStack.pop() ;  // clear item from subgoal stack
-                System.out.println("\nRule " + goalRule.name + " is true, setting " + goalVar.name + ": = " + goalVar.value);
-                if (goalClauseStack.empty() == true) {
-                    System.out.println("\n +++ Found Solution for goal: " + goalVar.name);
-                    break ; // for now, only find first solution, then stop
-                }
-            } else {
-                goalClauseStack.pop() ; // clear item from subgoal stack
-                System.out.println("\nRule " + goalRule.name + " is false, can't set " + goalVar.name);
-            }
-
-            // displayVariables("Backward Chaining") ;  // display variable bindings
-        } // endwhile
-
-        if (goalVar.value == null) {
-            System.out.println("\n +++ Could Not Find Solution for goal: " + goalVar.name);
-        }
-    }
 
     public Vector match(boolean test) {
 
@@ -179,7 +141,7 @@ public class RuleBase {
              determine which rules can fire,
                  return a Vector of rules that can fire
 
-            * test : true : means we will check the rul's antecedents and determine if we can use it or not (update truth in Rule )
+            * test : true : means we will check the rule's antecedents and determine if we can use it or not (update truth in Rule )
             * test : false : we don't need to update the truth value since we did it already with calling match(true)
 
              TODO:find what test means
@@ -229,16 +191,16 @@ public class RuleBase {
         return bestRule ;
     }
 
-    public HashMap forwardChain() {
+    public HashMap forwardChain() throws Exception {
         /*
             do the forwarrd Chain and output a hashmap
             * {"fired":[list of fired list(by order)],"conflictSet":[listOf conflict sets (by order) ] }
          */
         // hashmap aura 2 true: conflict set et fired rule
         //{"fired":[list of fired list(by order)],"conflictSet":[listOf conflict sets (by order) ] }
-        HashMap<String, ArrayList> firedAndConflict = new HashMap<>();
-        firedAndConflict.put("fired",new ArrayList<Rule>()) ;
-        firedAndConflict.put("conflictSet",new ArrayList<Vector>()) ;
+        HashMap<String, ArrayList> firedAndConflictHash = new HashMap<>();
+        firedAndConflictHash.put("fired",new ArrayList<Rule>()) ;
+        firedAndConflictHash.put("conflictSet",new ArrayList<Vector>()) ;
 
 
 
@@ -248,7 +210,7 @@ public class RuleBase {
         conflictRuleSet = match(true); // see which rules can fire
 
         while(conflictRuleSet.size() > 0) {
-            firedAndConflict.get("conflictSet").add(conflictRuleSet);
+            firedAndConflictHash.get("conflictSet").add(conflictRuleSet);
             Rule selected = selectRule(conflictRuleSet); // select the "best" rule
             selected.fire() ; // fire the rule
             // do the consequent action/assignment
@@ -256,13 +218,62 @@ public class RuleBase {
 
 
             //add fired rule to the list of fired rule
-            firedAndConflict.get("fired").add(selected);
+            firedAndConflictHash.get("fired").add(selected);
 
             conflictRuleSet = match(false); // see which rules can fire
 
         }
-        return firedAndConflict;
+        return firedAndConflictHash;
     }
 
+   /* public void backwardChain(String goalVarName)
+    {
+        *//*
+            Will not be used in our project
+
+            for all consequent clauses which refer to this goalVar
+            try to find goalVar value via a rule being true
+            if rule is true then pop, assign value, re-eval rule
+            //     if rule is false then pop, continue
+            //     if rule is null then we couldnt find a value (same as false?)
+            //
+         *//*
+
+        RuleVariable goalVar = (RuleVariable)variableList.get(goalVarName);
+        Enumeration goalClauses = goalVar.clauseRefs.elements() ;
+
+        while (goalClauses.hasMoreElements()) {
+            Clause goalClause = (Clause)goalClauses.nextElement() ;
+            if (goalClause.consequent.booleanValue() == false) continue ;
+
+            goalClauseStack.push(goalClause) ;
+
+            Rule goalRule = goalClause.getRule();
+            Boolean ruleTruth = goalRule.backChain() ; // find rule truth value
+            if (ruleTruth == null) {
+                System.out.println("\nRule " + goalRule.name +
+                        " is null, can't determine truth value.");
+            } else if (ruleTruth.booleanValue() == true) {
+                // rule is OK, assign consequent value to variable
+                goalVar.setValue(goalClause.rhs) ;
+                goalVar.setRuleName(goalRule.name) ;
+                goalClauseStack.pop() ;  // clear item from subgoal stack
+                System.out.println("\nRule " + goalRule.name + " is true, setting " + goalVar.name + ": = " + goalVar.value);
+                if (goalClauseStack.empty() == true) {
+                    System.out.println("\n +++ Found Solution for goal: " + goalVar.name);
+                    break ; // for now, only find first solution, then stop
+                }
+            } else {
+                goalClauseStack.pop() ; // clear item from subgoal stack
+                System.out.println("\nRule " + goalRule.name + " is false, can't set " + goalVar.name);
+            }
+
+            // displayVariables("Backward Chaining") ;  // display variable bindings
+        } // endwhile
+
+        if (goalVar.value == null) {
+            System.out.println("\n +++ Could Not Find Solution for goal: " + goalVar.name);
+        }
+    }*/
 
 }

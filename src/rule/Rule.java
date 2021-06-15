@@ -31,7 +31,11 @@ public class Rule {
 
     long numAntecedents() { return antecedents.length; }
 
+
     public static void checkRules(Vector clauseRefs) {
+        /*
+            TODO: what this method do?
+         */
         Enumeration enum87 = clauseRefs.elements();
         while(enum87.hasMoreElements()) {
             Clause temp = (Clause)enum87.nextElement();
@@ -42,9 +46,11 @@ public class Rule {
         }
     }
 
+
     public String getName() {
         return name;
     }
+
 
     Boolean check() {
         /*
@@ -71,58 +77,45 @@ public class Rule {
     }
 
 
-    // used by forward chaining only !
-    // fire this rule -- perform the consequent clause
-    // if a variable is changes, update all clauses where
-    //  it is references, and then all rules which contain
-    //  those clauses
 
-    void fire() {
+
+    void fire() throws Exception {
         /*
-           TODO: i know we need to update the method appendText
-                i just dont know how @youcefAz
-           * fires the rule
-                        */
-        RuleBase.appendText("\nFiring rule " + name ) ;
+            * fires the rule *
+        used by forward chaining only !
+        fire this rule -- perform the consequent clause
+        if a variable is changes, update all clauses where
+        it is references, and then all rules which contain
+        those clauses
+        */
+        System.out.println("\nFiring rule " + name );
         truth = true ;
         fired = true ;
         // set the variable value and update clauses
-        consequent.lhs.setValue(consequent.rhs) ;
+
+        //TODO: we need to act here if we need to change and do a a= b+c i think
+
+        //check if a variable exists in the rule Base
+
+        if(consequent.rhsIsComplex()){
+            // parse and update the value
+            String value= consequent.parseComplexRhs(this.rb);
+
+            consequent.lhs.setValue(value) ;
+        }else{
+            consequent.lhs.setValue(consequent.rhs) ;
+        }
 
         // now retest any rules whose clauses just changed
         checkRules(consequent.lhs.clauseRefs) ;
     }
 
 
-
-    // determine is a rule is true or false
-    // by recursively trying to prove its antecedent clauses are true
-    // if any are false, the rule is false
-
-    Boolean backChain()
-    {
-        /*
-        Will not be used in our project normalement
-         */
-
-        RuleBase.appendText("\nEvaluating rule " + name) ;
-        for (int i=0 ; i < antecedents.length ; i++) { // test each clause
-            if (antecedents[i].truth == null) rb.backwardChain(antecedents[i].lhs.name);
-            if (antecedents[i].truth == null) { // we couldn't prove true or false
-                truth = antecedents[i].check() ; // redundant?
-            } // endif
-            if (antecedents[i].truth.booleanValue() == true) {
-                continue ;    // test the next antecedent (if any)
-            } else {
-                return truth = false ; // exit, if any are false
-            }
-        } // endfor
-        return truth = true ; // all antecedents are true
-    }
-
-    // display the rule in text format
-    @SuppressWarnings("deprecation")
     String display() {
+        /*
+             display the rule in text format
+             returns a string that contanins the rule
+         */
         String displayStr = "";
         System.out.println(name +": IF ");
         displayStr = displayStr.concat( name + ":\n\nIF (\n");
@@ -135,7 +128,6 @@ public class Rule {
             displayStr = displayStr.concat("   ( "+nextClause.lhs.name +
                     nextClause.cond.asString() +
                     nextClause.rhs+ " )");
-            //TODO: find out why this part is never executed.
             if ((i+1) < antecedents.length) {
                 System.out.println(" AND\n") ;
                 displayStr  = displayStr.concat(" AND\n");
@@ -153,5 +145,30 @@ public class Rule {
         return displayStr;
 
     }
+
+/*    Boolean backChain()
+    {
+        *//*
+            Will not be used in our project
+
+            determine is a rule is true or false
+            by recursively trying to prove its antecedent clauses are true
+            if any are false, the rule is false
+         *//*
+
+        RuleBase.appendText("\nEvaluating rule " + name) ;
+        for (int i=0 ; i < antecedents.length ; i++) { // test each clause
+            if (antecedents[i].truth == null) rb.backwardChain(antecedents[i].lhs.name);
+            if (antecedents[i].truth == null) { // we couldn't prove true or false
+                truth = antecedents[i].check() ; // redundant?
+            } // endif
+            if (antecedents[i].truth.booleanValue() == true) {
+                continue ;    // test the next antecedent (if any)
+            } else {
+                return truth = false ; // exit, if any are false
+            }
+        } // endfor
+        return truth = true ; // all antecedents are true
+    }*/
 
 }

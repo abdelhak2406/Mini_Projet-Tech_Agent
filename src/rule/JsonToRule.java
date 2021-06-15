@@ -16,8 +16,8 @@ public class JsonToRule {
     Condition cLessEqualThan ;
     Condition cMoreEqualThan ;
     //to acess the objects
-    Map variableObjects = new HashMap<String,Object>();
-    Map ruleObjects = new HashMap<String,Object>();
+    Map variableObjects = new HashMap<String,Object>();//{"variable_name": variable Object}
+    Map ruleObjects = new HashMap<String,Object>();//{"ruleName":rule Object}
     //json object
     private JSONObject jsonObj;
     RuleBase rb  ;
@@ -103,7 +103,7 @@ public class JsonToRule {
             JSONArray antecedents = (JSONArray) rule.get("antecedents");
             Clause[] clauseArray= new Clause[antecedents.size()];
 
-            //adding antecedent c/Slauses
+            //adding antecedent clauses
             for (int i = 0; i < antecedents.size(); i++) {
                 JSONObject   clausei = (JSONObject) antecedents.get(i);
 
@@ -118,7 +118,6 @@ public class JsonToRule {
                 Clause clauseTemp = new Clause(var,cond,rhs);
                 clauseArray[i] = clauseTemp;
 
-                //TODO: create a function to get what conditioo run
             }
 
             JSONObject consequence =(JSONObject) rule.get("consequence");
@@ -129,8 +128,8 @@ public class JsonToRule {
 
             Clause  clauseCons = new Clause(var,cond,rhs);
             Rule rulei = new Rule(rb, ruleName,clauseArray,clauseCons );
-            //TODO:ici il faut executer la methode pour ajouter l'element
-            ruleObjects.put(ruleName,rulei);
+
+            this.ruleObjects.put(ruleName,rulei);
 
         });
     }

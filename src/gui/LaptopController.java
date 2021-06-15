@@ -10,7 +10,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-//import org.jetbrains.annotations.NotNull;
 import rule.JsonToRule;
 import rule.Rule;
 import rule.RuleBase;
@@ -195,22 +194,6 @@ public class LaptopController implements Initializable {
            return field.getSelectionModel().getSelectedItem()!=null;
     }
 
-
-
-
-
-    public void getInputs(){
-        System.out.println("\n\n\n WE ARE IN getInputs\n");
-        System.out.println( cbx_os.getSelectionModel().getSelectedItem());
-        String os = (String) cbx_os.getSelectionModel().getSelectedItem();
-        String desktopEnv = (String) cbx_desktopEnvirnment.getSelectionModel().getSelectedItem();
-        String linuxDistro =(String)  cbx_linuxDistro.getSelectionModel().getSelectedItem();
-        cbx_softwareNeeds.getSelectionModel().getSelectedItem();
-/*
-                ,cbx_desktopEnvirnment,cbx_linuxDistro,
-                cbx_softwareNeeds;
-*/
-    }
 
     public void switchToVoitureWin (ActionEvent event) throws Exception{
         Utilities u = new Utilities();
