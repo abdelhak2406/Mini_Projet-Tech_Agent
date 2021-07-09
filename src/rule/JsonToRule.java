@@ -102,30 +102,32 @@ public class JsonToRule {
 
             JSONArray antecedents = (JSONArray) rule.get("antecedents");
             Clause[] clauseArray= new Clause[antecedents.size()];
-
             //adding antecedent clauses
             for (int i = 0; i < antecedents.size(); i++) {
                 JSONObject   clausei = (JSONObject) antecedents.get(i);
 
                 String temp= (String) clausei.get("ruleVar");
-                // System.out.println("ruleName= "+ruleName+"\ntemp = "+temp);
+                System.out.println("ruleName= "+ruleName+"\ntemp = "+temp);
 
                 RuleVariable var =getRuleVarObject(clausei);
                 String condStr = (String) clausei.get("condition") ;
                 Condition cond = getCondition(condStr) ;
                 String rhs = (String)  clausei.get("rhs");
-
                 Clause clauseTemp = new Clause(var,cond,rhs);
                 clauseArray[i] = clauseTemp;
-
+                System.out.println("HELLO 1");
             }
 
             JSONObject consequence =(JSONObject) rule.get("consequence");
+            System.out.println("HELLO 2");
             RuleVariable var =getRuleVarObject(consequence);
+            System.out.println("HELLO 3");
             String condStr = (String) consequence.get("condition") ;
+            System.out.println("HELLO 4");
             Condition cond = getCondition(condStr) ;
+            System.out.println("HELLO 5");
             String rhs = (String)  consequence.get("rhs");
-
+            System.out.println("HELLO 6");
             Clause  clauseCons = new Clause(var,cond,rhs);
             Rule rulei = new Rule(rb, ruleName,clauseArray,clauseCons );
 
@@ -134,10 +136,12 @@ public class JsonToRule {
         });
     }
     RuleVariable getRuleVarObject(JSONObject clausei){
-
+        System.out.println("excuse me 0");
         String varName =  (String) clausei.get("ruleVar");
-
+        System.out.println(varName);
+        System.out.println("excuse me 1");
         RuleVariable  var = (RuleVariable) this.variableObjects.get(varName) ;
+        System.out.println("excuse me 2");
         return var;
     }
 

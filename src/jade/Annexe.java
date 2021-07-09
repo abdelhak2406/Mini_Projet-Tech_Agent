@@ -7,6 +7,11 @@ import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 import jade.tools.sniffer.Message;
+import rule.JsonToRule;
+import rule.RuleBase;
+
+import java.util.ArrayList;
+import java.util.Map;
 
 public class Annexe extends Agent {
     Object[] obj=null;
@@ -43,6 +48,16 @@ public class Annexe extends Agent {
                             if(getLocalName().equals("AN1")){
                                 //SE1
                                 company="Air algerie";
+                                ArrayList<String> departs=new ArrayList<>();departs.add("alger");departs.add("france");
+                                ArrayList<String> dest= new ArrayList<>();dest.add("france");dest.add("usa");
+                                AnnexeClass anex1=new AnnexeClass("Air algerie",departs,dest,200000,1.5F,0.15F,
+                                        0.5F,0.3F,0.2F,0.25F);
+
+                                anex1.getFormulaire(form.depart,form.destination,form.nbBillets,form.nbPetits,
+                                        form.nbEnfants, form.nbVieux, form.escale);
+
+                                anex1.forwardChaining();
+
                             }
                             else if (getLocalName().equals("AN2")){
                                 //SE2
