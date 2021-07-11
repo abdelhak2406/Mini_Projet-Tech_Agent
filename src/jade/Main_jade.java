@@ -7,7 +7,7 @@ public class Main_jade {
         StringBuffer SbAgent=new StringBuffer();
         //create formulaire then send it like below
         Formulaire form= new Formulaire(5,1,2,0,
-                "Alger","Paris",false);
+                "Alger","France",false);
 
         SbAgent.append("AC:jade.Agent_central("+form.nbBillets+","+form.nbPetits+
                 ","+form.nbEnfants+","+form.nbVieux+","+form.depart+","+form.destination+"," +
