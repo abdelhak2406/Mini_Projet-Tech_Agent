@@ -96,7 +96,7 @@
                     "rhs": "yes"
                 }
             ],
-            "consequece": {
+            "consequence": {
                 "ruleVar": "vehicule",
                 "condition": "=",
                 "rhs": "motorcycle"
@@ -121,7 +121,7 @@
                     "rhs": "2"
                 }
             ],
-            "consequece": {
+            "consequence": {
                 "ruleVar": "vehicule",
                 "condition": "=",
                 "rhs": "sportCar"
@@ -146,7 +146,7 @@
                     "rhs": "4"
                 }
             ],
-            "consequece": {
+            "consequence": {
                 "ruleVar": "vehicule",
                 "condition": "=",
                 "rhs": "sedan"
@@ -171,7 +171,7 @@
                     "rhs": "3"
                 }
             ],
-            "consequece": {
+            "consequence": {
                 "ruleVar": "vehicule",
                 "condition": "=",
                 "rhs": "miniVan"
@@ -196,7 +196,7 @@
                     "rhs": "4"
                 }
             ],
-            "consequece": {
+            "consequence": {
                 "ruleVar": "vehicule",
                 "condition": "=",
                 "rhs": "sportUtilityVehicule"
@@ -211,7 +211,7 @@
                     "rhs": "4"
                 }
             ],
-            "consequece": {
+            "consequence": {
                 "ruleVar": "vehiculeType",
                 "condition": "=",
                 "rhs": "cycle"
@@ -231,7 +231,7 @@
                     "rhs": "yes"
                 }
             ],
-            "consequece": {
+            "consequence": {
                 "ruleVar": "vehiculeType",
                 "condition": "=",
                 "rhs": "automobile"

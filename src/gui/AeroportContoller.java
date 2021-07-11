@@ -96,7 +96,8 @@ public class AeroportContoller  implements Initializable {
         //TODO: gerer le cas ou les nom
         //apeler la fonction jade(
         LaunchAgents launchObj = new LaunchAgents();
-        launchObj.launchAgents(nbBillet,nbBb,nbEnfant,nbVieux,depart,destination,escale);
+        //  launchObj.launchAgents(nbBillet,nbBb,nbEnfant,nbVieux,depart,destination,escale);
+        switchToAgentComm(e);
 
     }
 
@@ -153,5 +154,12 @@ public class AeroportContoller  implements Initializable {
         Utilities u = new Utilities();
         u.switchWindow(event,"Voiture.fxml",root,stage,scene );
     }
+
+    public void switchToAgentComm (ActionEvent event) throws Exception{
+        Utilities u = new Utilities();
+        u.switchWindow(event,"AgentCommunication.fxml",root,stage,scene );
+    }
+
+
 
 }

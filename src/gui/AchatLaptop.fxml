@@ -37,8 +37,7 @@
             <Label contentDisplay="TOP" layoutX="18.0" layoutY="196.0" prefHeight="24.0" prefWidth="102.0" text="Rules" />
             <TextArea fx:id="txt_display_laptop" layoutX="390.0" layoutY="448.0" prefHeight="38.0" prefWidth="150.0" />
             <Label contentDisplay="TOP" layoutX="308.0" layoutY="196.0" prefHeight="24.0" prefWidth="102.0" text="Conflict set" />
-            <Button fx:id="btn_launch" layoutX="81.0" layoutY="139.0" mnemonicParsing="false" onAction="#startForwardChain" prefHeight="50.0" prefWidth="139.0" text="Launch" />
-            <Button fx:id="btn_reset" layoutX="348.0" layoutY="139.0" mnemonicParsing="false" onAction="#reset" prefHeight="50.0" prefWidth="139.0" text="Reset" />
+            <Button fx:id="btn_launch" layoutX="221.0" layoutY="140.0" mnemonicParsing="false" onAction="#startForwardChain" prefHeight="50.0" prefWidth="139.0" text="Launch" />
          </children></AnchorPane>
   </items>
 </SplitPane>
