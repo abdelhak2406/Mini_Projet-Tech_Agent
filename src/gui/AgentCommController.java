@@ -19,8 +19,10 @@ import static gui.Utilities.acceptOnlyNumbersTextField;
 public class AgentCommController implements Initializable {
     @FXML
     public    TextArea txt_display_agtak;
+/*
     @FXML
-    public   TableView <Offer> tab_results = new TableView();
+    public   TableView <> tab_results = new TableView();
+*/
 
 
 
@@ -57,6 +59,7 @@ public class AgentCommController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+    /*
         //initializing results table
         TableColumn column1 = new TableColumn<>("Companie");
         column1.setCellValueFactory(new PropertyValueFactory<>("companie"));
@@ -68,6 +71,7 @@ public class AgentCommController implements Initializable {
         column5.setCellValueFactory(new PropertyValueFactory<>("prix"));
 
         tab_results.getColumns().addAll(column1,column4, column5);
+*/
 
     }
 
