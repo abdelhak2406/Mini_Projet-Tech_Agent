@@ -129,7 +129,6 @@ public class Clause {
         String [] resultArray = rhs.split("\\s*(\\+|\\-|\\/|\\*)\\s*");
         //TODO: a quoi ressemble ce tableau
         for(String var : resultArray){
-            System.out.println(var);
            if(rb.getVariable(var).getValue()==null){
                throw new Exception("Operation impossible, the variable "+var+ " has a null value");
            }

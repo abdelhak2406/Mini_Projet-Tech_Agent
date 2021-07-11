@@ -15,7 +15,7 @@ import java.util.Map;
 
 public class Annexe extends Agent {
     Object[] obj=null;
-    Boolean acceptable=true;
+    Boolean acceptable=false;
 
     protected void setup(){
         try{
@@ -40,42 +40,87 @@ public class Annexe extends Agent {
                             Formulaire form= new Formulaire(Integer.parseInt((String) obj[0]),Integer.parseInt((String) obj[1]),
                                     Integer.parseInt((String) obj[2]), Integer.parseInt((String) obj[3]),(String) obj[4],
                                     (String)obj[5],Boolean.parseBoolean((String) obj[6]));
-                            System.out.println(form);
 
                             //Now that we have data we treat it with systeme experts here
 
                             String company;
+                            Offre offre= new Offre();
                             if(getLocalName().equals("AN1")){
                                 //SE1
                                 company="Air algerie";
-                                ArrayList<String> departs=new ArrayList<>();departs.add("Alger");departs.add("France");
-                                ArrayList<String> dest= new ArrayList<>();dest.add("France");dest.add("Usa");
-                                AnnexeClass anex1=new AnnexeClass("Air algerie",departs,dest,200000,0.5F,0.15F,
-                                        0.5F,0.3F,0.2F,0.25F);
+                                ArrayList<Vol> vols= new ArrayList<>();
+                                Vol vol1= new Vol("Algerie","France","2H",false,200);
+                                Vol vol2= new Vol("France","Algerie","1H30",true,250);
+                                vols.add(vol1);vols.add(vol2);
+
+                                AnnexeClass anex1=new AnnexeClass(company,vols,0.8F,0.1F,
+                                        0.4F,0.3F,0.25F,0.15F,
+                                        new JsonToRule("resources/vente_billets_1.json"));
 
                                 anex1.getFormulaire(form.depart,form.destination,form.nbBillets,form.nbPetits,
                                         form.nbEnfants, form.nbVieux, form.escale);
 
-                                System.out.println("begining forward chaining");
-                                anex1.forwardChaining();
+                                offre=anex1.forwardChaining();
 
                             }
                             else if (getLocalName().equals("AN2")){
                                 //SE2
                                 company="Air France";
+                                ArrayList<Vol> vols= new ArrayList<>();
+                                Vol vol1= new Vol("France","Usa","9H",true,550);
+                                Vol vol2= new Vol("France","Algerie","1H30",false,300);
+                                vols.add(vol1);vols.add(vol2);
+
+                                AnnexeClass anex1=new AnnexeClass(company,vols,0.5F,0.15F,
+                                        0.5F,0.3F,0.2F,0.25F,
+                                        new JsonToRule("resources/vente_billets_2.json"));
+
+                                anex1.getFormulaire(form.depart,form.destination,form.nbBillets,form.nbPetits,
+                                        form.nbEnfants, form.nbVieux, form.escale);
+
+                                offre=anex1.forwardChaining();
                             }
                             else if (getLocalName().equals("AN3")){
                                 //SE3
-                                company="Aigle Azur";
+                                company="Qatar Airways";
+                                ArrayList<Vol> vols= new ArrayList<>();
+                                Vol vol1= new Vol("Usa","France","8H",true,500);
+                                Vol vol2= new Vol("Qatar","Algerie","5H",false,600);
+                                vols.add(vol1);vols.add(vol2);
+
+                                AnnexeClass anex1=new AnnexeClass(company,vols,0.4F,0.3F,
+                                        0.1F,0.15F,0.2F,0.25F,
+                                        new JsonToRule("resources/vente_billets_3.json"));
+
+                                anex1.getFormulaire(form.depart,form.destination,form.nbBillets,form.nbPetits,
+                                        form.nbEnfants, form.nbVieux, form.escale);
+
+                                offre=anex1.forwardChaining();
                             }
                             else {
                                 //SE4
                                 company="Turkish Airlines";
+                                ArrayList<Vol> vols= new ArrayList<>();
+                                Vol vol1= new Vol("Turkey","France","4H",true,400);
+                                Vol vol2= new Vol("France","Algerie","3H",false,200);
+                                vols.add(vol1);vols.add(vol2);
+
+                                AnnexeClass anex1=new AnnexeClass(company,vols,0.5F,0.1F,
+                                        0.4F,0.3F,0.2F,0.4F,
+                                        new JsonToRule("resources/vente_billets_4.json"));
+
+                                anex1.getFormulaire(form.depart,form.destination,form.nbBillets,form.nbPetits,
+                                        form.nbEnfants, form.nbVieux, form.escale);
+
+                                System.out.println("chainin");
+                                offre=anex1.forwardChaining();
                             }
                             //modify acceptable when finished
 
                             //when we finish we get an offre
-                            Offre offre= new Offre(company,"3H",100000,false);
+                            if(offre!=null){
+                                acceptable=true;
+                            }
 
                             if(acceptable){
                                 Object[] replyO= new Object[4];

@@ -12,31 +12,31 @@ import java.util.Vector;
 
 public class AnnexeClass {
 
-    int nb_billets,nb_age7,nb_age11,prix,nb_age75;
+    int nb_billets,nb_age7,nb_age11,prix=0,nb_age75;
     String annex_name,customer_depart,customer_dest;
 
     Boolean escale=false,bonus_estivale=false,proposer_vol=false;
 
     float bonus,escaleR,reduction_nb_billet,
             reduction_petit,reduction_enfants,reduction_vieux;
+    JsonToRule rules;
 
-    ArrayList<String> depart_list,destination_list;
+    ArrayList<Vol> vols;
 
     //Used when creating the annex, we get it from json or smthin
-    public AnnexeClass(String annex_name,ArrayList<String> depart_list,ArrayList<String> destination_list,
-                       int prix, float bonus, float escaleR, float reduction_nb_billet,
-                       float reduction_petit, float reduction_enfants, float reduction_vieux) {
+    public AnnexeClass(String annex_name,ArrayList<Vol> vols,
+                       float bonus, float escaleR, float reduction_nb_billet,
+                       float reduction_petit, float reduction_enfants, float reduction_vieux,JsonToRule rules) {
         this.annex_name=annex_name;
-        this.prix = prix;
         this.bonus = bonus;
         this.escaleR = escaleR;
         this.reduction_nb_billet = reduction_nb_billet;
         this.reduction_petit = reduction_petit;
         this.reduction_enfants = reduction_enfants;
         this.reduction_vieux = reduction_vieux;
+        this.rules=rules;
 
-        this.depart_list=depart_list;
-        this.destination_list=destination_list;
+        this.vols=vols;
 
         transformReductions();
     }
@@ -60,19 +60,27 @@ public class AnnexeClass {
         reduction_vieux=(int)(1/reduction_vieux);
     }
 
-    public Boolean forwardChaining() throws Exception{
-        JsonToRule rules = new JsonToRule("resources/vente_billets.json") ;
+    public Offre forwardChaining() throws Exception{
+
+        Vol vol= getVol(customer_depart,customer_dest);
+        if(vol!=null){
+            prix=vol.prix;
+            escale=vol.escale;
+        }
+
+        System.out.println("pls1");
+
         Map variableObjects  = rules.getVariableObjects() ;
         Map rulesObjects  = rules.getRuleObjects() ;
         RuleBase rb=rules.getRb();
-
+        System.out.println("pls2");
 
         RuleVariable nbbilletVar = (RuleVariable) variableObjects.get("nb_billets");
         nbbilletVar.setValue(String.valueOf(nb_billets));
 
         RuleVariable departVar = (RuleVariable) variableObjects.get("depart");
         departVar.setValue(customer_depart);
-        System.out.println("oya1");
+
         RuleVariable destVar = (RuleVariable) variableObjects.get("destination");
         destVar.setValue(customer_dest);
 
@@ -105,7 +113,6 @@ public class AnnexeClass {
         RuleVariable rpVar = (RuleVariable) variableObjects.get("reduction_petit");
         rpVar.setValue(String.valueOf((int)reduction_petit));
 
-        System.out.println("oya6");
 
         RuleVariable reVar = (RuleVariable) variableObjects.get("reduction_enfants");
         reVar.setValue(String.valueOf((int)reduction_enfants));
@@ -113,12 +120,10 @@ public class AnnexeClass {
         RuleVariable rvVar = (RuleVariable) variableObjects.get("reduction_vieux");
         rvVar.setValue(String.valueOf((int)reduction_vieux));
 
-        System.out.println("oyaurmom");
 
         RuleVariable prix7Var = (RuleVariable) variableObjects.get("prix_7");
         prix7Var.setValue(String.valueOf(0));
 
-        System.out.println("oya7");
 
         RuleVariable prix11Var = (RuleVariable) variableObjects.get("prix_11");
         prix11Var.setValue(String.valueOf(0));
@@ -137,8 +142,6 @@ public class AnnexeClass {
 
         System.out.println("STARTING FORWARD CHAINING");
 
-        System.out.println(this);
-
         HashMap<String, ArrayList> outputs = rb.forwardChain();
         ArrayList<Rule> firedRules = outputs.get("fired");
         ArrayList<Vector> conflictSets = outputs.get("conflictSet");
@@ -152,10 +155,28 @@ public class AnnexeClass {
             String cnf = rb.displayConflictSet(tmpConf);
 
             System.out.println("fired "+i+" "+firedTmp.getName());
-
         }
-        return false;
+
+
+        if(Boolean.valueOf(rb.getVariable("proposer_vol").getValue()) ==true){
+            Offre offre= new Offre(annex_name,getVol(customer_depart,customer_dest).durée,
+                    Integer.valueOf(rb.getVariable("prix_final").getValue()),
+                    getVol(customer_depart,customer_dest).escale);
+            return  offre;
+        }
+        return null;
+
     }
+
+    public Vol getVol(String depart, String dest){
+        for (Vol i : vols){
+            if(i.depart.equals(depart) && i.destination.equals(dest)){
+                return i;
+            }
+        }
+        return null;
+    }
+
 
 
     @Override
@@ -177,8 +198,7 @@ public class AnnexeClass {
                 ", reduction_petit=" + reduction_petit +
                 ", reduction_enfants=" + reduction_enfants +
                 ", reduction_vieux=" + reduction_vieux +
-                ", depart_list=" + depart_list +
-                ", destination_list=" + destination_list +
+                ", Vols list=" + vols+
                 '}';
     }
 }

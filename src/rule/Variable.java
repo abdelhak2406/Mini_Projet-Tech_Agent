@@ -12,7 +12,7 @@ public abstract class Variable {
     public Variable() {} ;
     public Variable(String Name) {name = Name; value = null; }
     void   setValue(String val) { value = val ; }
-    String getValue() { return value; }
+    public String getValue() { return value; }
 
 
     void setLabels(String Labels) {
