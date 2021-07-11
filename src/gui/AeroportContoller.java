@@ -60,7 +60,7 @@ public class AeroportContoller  implements Initializable {
                 (isSelectedCombo(cbx_destination))
 
         ){
-            int nbBillet= Integer.parseInt(txt_nb_billet.getText());
+            nbBillet= Integer.parseInt(txt_nb_billet.getText());
 
             depart = (String) cbx_depart.getSelectionModel().getSelectedItem();
             destination = (String) cbx_destination.getSelectionModel().getSelectedItem();
@@ -82,11 +82,11 @@ public class AeroportContoller  implements Initializable {
 
             //comboBoxes
             if (isSelectedCombo(cbx_depart)){
-                String depart = (String) cbx_depart.getSelectionModel().getSelectedItem();
+                 depart = (String) cbx_depart.getSelectionModel().getSelectedItem();
             }
 
             if (isSelectedCombo(cbx_destination)){
-                String destination = (String) cbx_destination.getSelectionModel().getSelectedItem();
+                destination = (String) cbx_destination.getSelectionModel().getSelectedItem();
             }
 
         }else{
