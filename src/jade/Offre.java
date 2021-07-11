@@ -16,6 +16,9 @@ public class Offre {
         this.escale = escale;
     }
 
+    public Offre() {
+    }
+
     @Override
     public String toString() {
         return "Offre{" +

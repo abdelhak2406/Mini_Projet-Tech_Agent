@@ -57,29 +57,36 @@ public class Agent_central extends Agent {
                         //then resend another message to the annex that the user has chosen
 
                         try {
+
                             System.out.println("printing in AC : ");
                             Object[] annexReply = (Object[]) msg.getContentObject();
 
+                            //HERE ARE THE OFFERS TO PRINT IN UI, LZM TRECUPIRIHOM GE3 SINCE YJO BEL WA7D (multi agent)
                             Offre offre= new Offre((String) annexReply[0],(String) annexReply[1],
                                     (int) annexReply[2],(Boolean) annexReply[3]);
 
                             System.out.println(offre);
-                            //UI treatement here
+
 
                             //new message to the annexe we choose, probably better if its a function
+                            //Le compteur y7seb w9teh on a recu ge3 les messages, so ki ndkhlo l if hedi mli7a
+                            //tu call un fct qui va faire attendre hed l'agent jusqu'a ce que le client choisi l'annexe,
                             if(compteur==4){
+
                                 ACLMessage msg1 = new ACLMessage(ACLMessage.CONFIRM);
                                 msg1.setContent("We choose YOU");
                                 //send to selected annexe
+                                //puis 3la 7sab l'annexe bdel l AID to AN1 AN2 AN3 or AN4
                                 msg1.addReceiver(new AID("AN2", AID.ISLOCALNAME));
                                 send(msg1);
                             }
+                            //mli7a every print li rahi f this class t7etha fel UI since il l'a demandé,
+                            // after that cbn kemelna!
 
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-                        //Do delete stops the cyclic behaviour, kills the agent.
-                        //doDelete();
+
                     }
                     else if (msg.getPerformative()==ACLMessage.REFUSE){
                         //l'annexe n'a pas accepté le formulaire envoyé

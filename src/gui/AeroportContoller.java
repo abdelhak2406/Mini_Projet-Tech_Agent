@@ -40,7 +40,7 @@ public class AeroportContoller  implements Initializable {
     CheckBox check_escale;
 
     public void createRules() throws Exception {
-        JsonToRule rules = new JsonToRule("resources/vente_billets.json");
+        JsonToRule rules = new JsonToRule("resources/vente_billets_1.json");
         this.variableObjects  = rules.getVariableObjects();
         this.rulesObjects  = rules.getRuleObjects();
         this.rb = rules.getRb();
@@ -82,7 +82,10 @@ public class AeroportContoller  implements Initializable {
 
             //comboBoxes
             if (isSelectedCombo(cbx_depart)){
-                 depart = (String) cbx_depart.getSelectionModel().getSelectedItem();
+
+                depart = (String) cbx_depart.getSelectionModel().getSelectedItem();
+
+
             }
 
             if (isSelectedCombo(cbx_destination)){
