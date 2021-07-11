@@ -1,0 +1,253 @@
+{
+  "ruleBaseName": "vente_billets_1",
+  "variables": [
+    {
+      "name": "nb_billets",
+      "labels": []
+    },
+    {
+      "name": "depart",
+      "labels": [
+        "Algerie",
+        "France"
+      ]
+    },
+    {
+      "name": "destination",
+      "labels": [
+        "France",
+        "Usa"
+      ]
+    },
+    {
+      "name": "nb_age11",
+      "labels": []
+    },
+    {
+      "name": "nb_age7",
+      "labels": []
+    },
+    {
+      "name": "nb_age75",
+      "labels": []
+    },
+    {
+      "name": "prix_init",
+      "labels": []
+    },
+    {
+      "name": "prix_7",
+      "labels": []
+    },
+    {
+      "name": "prix_11",
+      "labels": []
+    },
+    {
+      "name": "prix_75",
+      "labels": []
+    },
+    {
+      "name": "prix_bonus",
+      "labels": []
+    },
+    {
+      "name": "prix_billets",
+      "labels": []
+    },
+    {
+      "name": "prix_escale",
+      "labels": []
+    },
+    {
+      "name": "prix_final",
+      "labels": []
+    },
+    {
+      "name": "escale",
+      "labels": []
+    },
+    {
+      "name": "escaleR",
+      "labels": []
+    },
+    {
+      "name": "bonus_estivale",
+      "labels": []
+    },
+    {
+      "name": "proposer_vol",
+      "labels": []
+    },
+    {
+      "name": "bonus",
+      "labels": []
+    },
+    {
+      "name": "reduction_nbbillet",
+      "labels": []
+    },
+    {
+      "name": "reduction_petit",
+      "labels": []
+    },
+    {
+      "name": "reduction_enfants",
+      "labels": []
+    },
+    {
+      "name": "reduction_vieux",
+      "labels": []
+    }
+  ],
+  "rules": [
+    {
+      "name": "proposer_vol1_rule",
+      "antecedents": [
+        {
+          "ruleVar": "depart",
+          "condition": "=",
+          "rhs": "Usa"
+        },
+        {
+          "ruleVar": "destination",
+          "condition": "=",
+          "rhs": "France"
+        }
+      ],
+      "consequence": {
+        "ruleVar": "proposer_vol",
+        "condition": "=",
+        "rhs": "true"
+      }
+    },
+    {
+      "name": "proposer_vol2_rule",
+      "antecedents": [
+        {
+          "ruleVar": "depart",
+          "condition": "=",
+          "rhs": "Qatar"
+        },
+        {
+          "ruleVar": "destination",
+          "condition": "=",
+          "rhs": "Algerie"
+        }
+      ],
+      "consequence": {
+        "ruleVar": "proposer_vol",
+        "condition": "=",
+        "rhs": "true"
+      }
+    },
+    {
+      "name": "escale_rule",
+      "antecedents": [
+        {
+          "ruleVar": "escale",
+          "condition": "=",
+          "rhs": "true"
+        }
+      ],
+      "consequence": {
+        "ruleVar": "prix_escale",
+        "condition": "=",
+        "rhs": "prix_init/escaleR"
+      }
+    },
+    {
+      "name": "nb_age7_true",
+      "antecedents": [
+        {
+          "ruleVar": "nb_age7",
+          "condition": "!=",
+          "rhs": "0"
+        }
+      ],
+      "consequence": {
+        "ruleVar": "prix_7",
+        "condition": "=",
+        "rhs": "prix_init*nb_age7/reduction_petit"
+      }
+    },
+    {
+      "name": "nb_age11_true",
+      "antecedents": [
+        {
+          "ruleVar": "nb_age11",
+          "condition": "!=",
+          "rhs": "0"
+        }
+      ],
+      "consequence": {
+        "ruleVar": "prix_11",
+        "condition": "=",
+        "rhs": "prix_init*nb_age11/reduction_enfants"
+      }
+    },
+    {
+      "name": "nb_age75_true",
+      "antecedents": [
+        {
+          "ruleVar": "nb_age75",
+          "condition": "!=",
+          "rhs": "0"
+        }
+      ],
+      "consequence": {
+        "ruleVar": "prix_75",
+        "condition": "=",
+        "rhs": "prix_init*nb_age75/reduction_vieux"
+      }
+    },
+    {
+      "name": "reduction_billet_rule",
+      "antecedents": [
+        {
+          "ruleVar": "nb_billets",
+          "condition": ">=",
+          "rhs": "4"
+        }
+      ],
+      "consequence": {
+        "ruleVar": "prix_billets",
+        "condition": "=",
+        "rhs": "prix_init/reduction_nbbillet"
+      }
+    },
+    {
+      "name": "estivale_bonus",
+      "antecedents": [
+        {
+          "ruleVar": "bonus_estivale",
+          "condition": "=",
+          "rhs": "true"
+        }
+      ],
+      "consequence": {
+        "ruleVar": "prix_bonus",
+        "condition": "=",
+        "rhs": "prix_init/bonus"
+      }
+    },
+    {
+      "name": "final_price_rule",
+      "antecedents": [
+        {
+          "ruleVar": "proposer_vol",
+          "condition": "=",
+          "rhs": "true"
+        }
+      ],
+      "consequence": {
+        "ruleVar": "prix_final",
+        "condition": "=",
+        "rhs": "prix_init*nb_billets+prix_bonus-prix_escale-prix_7-prix_11-prix_75"
+      }
+    }
+
+
+  ]
+}
+

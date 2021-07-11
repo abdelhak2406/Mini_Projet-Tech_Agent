@@ -82,7 +82,10 @@ public class AeroportContoller  implements Initializable {
 
             //comboBoxes
             if (isSelectedCombo(cbx_depart)){
+
                 depart = (String) cbx_depart.getSelectionModel().getSelectedItem();
+
+
             }
 
             if (isSelectedCombo(cbx_destination)){
