@@ -70,7 +70,6 @@ public class JsonToRule {
             JSONObject variable = (JSONObject) entry;
             String varName = (String) variable.get("name");
 
-            //TODO:ici il faut executer la methode pour ajouter l'element
 
             RuleVariable ruleVari = new RuleVariable(varName) ;
             this.rb.getVariableList().put(ruleVari.name,ruleVari) ;
@@ -128,13 +127,13 @@ public class JsonToRule {
 
         });
     }
+
     RuleVariable getRuleVarObject(JSONObject clausei){
         String varName =  (String) clausei.get("ruleVar");
         System.out.println(varName);
         RuleVariable  var = (RuleVariable) this.variableObjects.get(varName) ;
         return var;
     }
-
 
     void createConditions(){
         //TODO: ajouter les condition au variable de la classe

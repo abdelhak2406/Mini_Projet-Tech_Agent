@@ -34,14 +34,16 @@ public abstract class Variable {
         return (String)labels.elementAt(index);
     }
 
-    String getLabels() {
+    public Vector getLabels() {
         /*
-            return a string containing all labels
+            return a Vector containing all labels
          */
-        String labelList = new String();
+        Vector labelList = new Vector() ;
+        //String labelList = new String();
         Enumeration enum87 = labels.elements() ;
         while(enum87.hasMoreElements()) {
-            labelList += enum87.nextElement() + " " ;
+            labelList.addElement(enum87.nextElement());
+            //labelList += enum87.nextElement() + " " ;
         }
         return labelList ;
     }

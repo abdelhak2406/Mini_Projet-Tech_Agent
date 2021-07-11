@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
 <SplitPane dividerPositions="0.17436661698956782" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="507.0" prefWidth="673.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.AeroportContoller">
@@ -16,7 +19,20 @@
       </AnchorPane>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="547.0" prefWidth="364.0">
          <children>
-            <Label layoutX="197.0" layoutY="90.0" text="lalalalalaa" />
+            <Button fx:id="btn_submit" layoutX="429.0" layoutY="449.0" mnemonicParsing="false" onAction="#submitForm" text="Confirmé" />
+            <TextField fx:id="txt_nb_billet" layoutX="27.0" layoutY="63.0" />
+            <Label layoutX="29.0" layoutY="39.0" text="Nombre de billets" />
+            <Label layoutX="344.0" layoutY="39.0" text="Nombre de bébé" />
+            <TextField fx:id="txt_nb_bb" layoutX="344.0" layoutY="63.0" />
+            <TextField fx:id="txt_nb_enfant" layoutX="27.0" layoutY="126.0" />
+            <Label layoutX="29.0" layoutY="102.0" text="Nombre d'enfants" />
+            <TextField fx:id="txt_nb_vieux" layoutX="344.0" layoutY="126.0" />
+            <Label layoutX="346.0" layoutY="102.0" text="Nombre de personne agée" />
+            <Label layoutX="29.0" layoutY="162.0" text="Depart" />
+            <Label layoutX="346.0" layoutY="162.0" text="Destination" />
+            <CheckBox fx:id="check_escale" layoutX="29.0" layoutY="244.0" mnemonicParsing="false" text="Escale" />
+            <ComboBox fx:id="cbx_depart" layoutX="27.0" layoutY="186.0" prefWidth="150.0" />
+            <ComboBox fx:id="cbx_destination" layoutX="346.0" layoutY="186.0" prefWidth="150.0" />
          </children></AnchorPane>
   </items>
 </SplitPane>
