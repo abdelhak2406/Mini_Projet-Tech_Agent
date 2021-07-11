@@ -16,7 +16,7 @@
       "name": "destination",
       "labels": [
         "France",
-        "usa"
+        "Usa"
       ]
     },
     {
@@ -32,7 +32,35 @@
       "labels": []
     },
     {
-      "name": "prix",
+      "name": "prix_init",
+      "labels": []
+    },
+    {
+      "name": "prix_7",
+      "labels": []
+    },
+    {
+      "name": "prix_11",
+      "labels": []
+    },
+    {
+      "name": "prix_75",
+      "labels": []
+    },
+    {
+      "name": "prix_bonus",
+      "labels": []
+    },
+    {
+      "name": "prix_billets",
+      "labels": []
+    },
+    {
+      "name": "prix_escale",
+      "labels": []
+    },
+    {
+      "name": "prix_final",
       "labels": []
     },
     {
@@ -143,9 +171,9 @@
         }
       ],
       "consequence": {
-        "ruleVar": "prix",
+        "ruleVar": "prix_escale",
         "condition": "=",
-        "rhs": "prix*escaleR"
+        "rhs": "prix_init/escaleR"
       }
     },
     {
@@ -157,10 +185,10 @@
           "rhs": "0"
         }
       ],
-      "consequece": {
-        "ruleVar": "prix",
+      "consequence": {
+        "ruleVar": "prix_7",
         "condition": "=",
-        "rhs": "prix * reduction_petit * nb_age7"
+        "rhs": "prix_init*nb_age7/reduction_petit"
       }
     },
     {
@@ -172,10 +200,10 @@
           "rhs": "0"
         }
       ],
-      "consequece": {
-        "ruleVar": "prix",
+      "consequence": {
+        "ruleVar": "prix_11",
         "condition": "=",
-        "rhs": "prix - prix*reduction_enfants*nb_age11"
+        "rhs": "prix_init*nb_age11/reduction_enfants"
       }
     },
     {
@@ -187,10 +215,10 @@
           "rhs": "0"
         }
       ],
-      "consequece": {
-        "ruleVar": "prix",
+      "consequence": {
+        "ruleVar": "prix_75",
         "condition": "=",
-        "rhs": "prix - prix*reduction_vieux*nb_age75"
+        "rhs": "prix_init*nb_age75/reduction_vieux"
       }
     },
     {
@@ -202,14 +230,14 @@
           "rhs": "4"
         }
       ],
-      "consequece": {
-        "ruleVar": "prix",
+      "consequence": {
+        "ruleVar": "prix_billets",
         "condition": "=",
-        "rhs": "prix/nbBillets*reduction_nbbillet"
+        "rhs": "prix_init/nbBillets/reduction_nbbillet"
       }
     },
     {
-      "name": "estivale_bonux",
+      "name": "estivale_bonus",
       "antecedents": [
         {
           "ruleVar": "bonus_estivale",
@@ -217,12 +245,28 @@
           "rhs": "true"
         }
       ],
-      "consequece": {
-        "ruleVar": "prix",
+      "consequence": {
+        "ruleVar": "prix_bonus",
         "condition": "=",
-        "rhs": "prix*bonus"
+        "rhs": "prix_init/bonus"
+      }
+    },
+    {
+      "name": "final_price_rule",
+      "antecedents": [
+        {
+          "ruleVar": "proposer_vol",
+          "condition": "=",
+          "rhs": "true"
+        }
+      ],
+      "consequence": {
+        "ruleVar": "prix_final",
+        "condition": "=",
+        "rhs": "prix_init+prix_bonus-prix_escale-prix_7-prix_11-prix_75"
       }
     }
+
 
   ]
 }

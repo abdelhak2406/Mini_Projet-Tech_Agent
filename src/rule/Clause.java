@@ -125,9 +125,11 @@ public class Clause {
             parse the lhs and update his  value
          */
         //here we will parse the rhs part
+       System.out.println("IN COMPLEX");
         String [] resultArray = rhs.split("\\s*(\\+|\\-|\\/|\\*)\\s*");
         //TODO: a quoi ressemble ce tableau
         for(String var : resultArray){
+            System.out.println(var);
            if(rb.getVariable(var).getValue()==null){
                throw new Exception("Operation impossible, the variable "+var+ " has a null value");
            }
