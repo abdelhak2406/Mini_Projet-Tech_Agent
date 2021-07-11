@@ -6,7 +6,7 @@ package rule;
 ** Une clause est composé de 3 elem
 *   1. ruleVariable(exemple:  num_wheels)
 *   2. Condition
-*   3. String(right hand side) =
+*   3. String(right hand side)
  */
 
 import java.util.*;
@@ -19,6 +19,7 @@ public class Clause {
     Condition  cond ;
     Boolean consequent ;  // true or false
     Boolean truth ;   // states = null(unknown), true or false (car sometimes rule cannot be determiend)
+
     Clause(RuleVariable Lhs, Condition Cond, String Rhs)
     {
         this.lhs = Lhs ;
@@ -133,7 +134,8 @@ public class Clause {
         }
         // !WARNING: No space allowed in the arithmetic expression
         //We are assuming that the operation will look like a*c+i
-        // the arithmetic operation needs to be ordered and also voila quoi
+        // !WARNING2 :the arithmetic operation needs to be ordered THERE IS NO TAKING CARE OF ORDER!!!
+
         String[] operationArith =  rhs.split("(?<=(\\+|\\-|\\/|\\*)|(?=(\\+|\\-|\\/|\\*)))");
         int result=  Integer.parseInt(rb.getVariable(operationArith[0]).getValue()) ;
         int tmp;
@@ -142,6 +144,7 @@ public class Clause {
                 tmp=  Integer.parseInt(rb.getVariable(operationArith[i+1]).getValue());
                 switch (operationArith[i]){
                     //TODO: si on a des resultat float il faut gerer sa normalement
+
                     case "+":
                         result = result + tmp ;
                         break;

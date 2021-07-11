@@ -205,7 +205,6 @@ public class LaptopController implements Initializable {
         u.switchWindow(event,"Aeroport.fxml",root,stage,scene );
 
 
-
     }
 
 

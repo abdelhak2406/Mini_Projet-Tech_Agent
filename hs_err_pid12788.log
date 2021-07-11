@@ -1,0 +1,33 @@
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  SIGSEGV (0xb) at pc=0x00007ff6de0bd231, pid=12788, tid=19715
+#
+# JRE version: OpenJDK Runtime Environment (14.0.2+12) (build 14.0.2+12-46)
+# Java VM: OpenJDK 64-Bit Server VM (14.0.2+12-46, mixed mode, sharing, tiered, compressed oops, g1 gc, linux-amd64)
+# Problematic frame:
+# C  [libjimage.so+0x4231]  ImageStrings::find(Endian*, char const*, int*, unsigned int)+0x71
+#
+# No core dump will be written. Core dumps have been disabled. To enable core dumping, try "ulimit -c unlimited" before starting Java again
+#
+# If you would like to submit a bug report, please visit:
+#   https://bugreport.java.com/bugreport/crash.jsp
+#
+
+---------------  S U M M A R Y ------------
+
+Command Line: -Djava.library.path=/home/goku/Code/SII/S2/MEA/openjfx-16_linux-x64_bin-sdk/javafx-sdk-16/lib -javaagent:/home/goku/Programs/idea-IU-193.6494.35/lib/idea_rt.jar=42651:/home/goku/Programs/idea-IU-193.6494.35/bin -Dfile.encoding=UTF-8 jade.Main_jade
+
+Host: Intel(R) Core(TM) i5-5200U CPU @ 2.20GHz, 4 cores, 7G, Ubuntu 20.04.2 LTS
+Time: Sat Jul 10 19:38:21 2021 CET elapsed time: 9394 seconds (0d 2h 36m 34s)
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x00007ff6881b7000):  JavaThread "XToolkt-Shutdown-Thread" [_thread_in_vm, id=19715, stack(0x00007ff6ad58a000,0x00007ff6ad68b000)]
+
+Stack: [0x00007ff6ad58a000,0x00007ff6ad68b000],  sp=0x00007ff6ad688040,  free space=1016k
+Native frames: (J=compiled Java code, A=aot compiled Java code, j=interpreted, Vv=VM code, C=native code)
+C  [libjimage.so+0x4231]  ImageStrings::find(Endian*, char const*, int*, unsigned int)+0x71
+C  [libjimage.so+0x4d7a]  ImageFileReader::find_location_index(char const*, unsigned long long*) const+0x3a
+C  [libjimage.so+0x5271]  JIMAGE_FindResource+0xf1
+V  [libjvm.so+0x50f473]

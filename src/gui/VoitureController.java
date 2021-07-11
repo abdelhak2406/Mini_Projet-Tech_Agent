@@ -31,6 +31,8 @@ public class VoitureController{
         //TODO: implement this method
 
 
+
+
     }
     public void initVehiculeTypeCombo() {
         cbx_vehiculeType.getItems().add("cycle");
@@ -42,13 +44,7 @@ public class VoitureController{
     }
 
 
-/*    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        initVehiculeTypeCombo();
-        initMotorCombo();
-        acceptOnlyNumbersTextField(txt_numDoors);
-        acceptOnlyNumbersTextField(txt_numWheels);
-    }*/
+
 
     public void switchToLaptopWin (ActionEvent event) throws Exception{
         Utilities u = new Utilities();

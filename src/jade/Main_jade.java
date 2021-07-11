@@ -6,6 +6,7 @@ public class Main_jade {
         String[] jadearg= new String[2];
         StringBuffer SbAgent=new StringBuffer();
         //create formulaire then send it like below
+
         Formulaire form= new Formulaire(5,1,2,0,
                 "Alger","Paris",false);
 
